@@ -1,9 +1,9 @@
-# Python bytecode
+# Python bytecode files
 *.pyc
 *.pyo
 __pycache__/
 
-# Virtual environment folders
+# Virtual environment (TODO: add other virtual environment names as needed -> not necessary if using `pipenv`)
 venv/
 env/
 .venv/
@@ -13,17 +13,20 @@ env/
 .env
 .env.*
 
-# Django migrations bytecode
+# Django migrations (temporary or backup files)
 */migrations/__pycache__/
 */migrations/*.pyc
 
-# Database temporary files
+# Database
 db.sqlite3-journal
 
-# Static files you don't want in Git
+# Static and media files
+
+# static/admin is created on the Apache-server when we create the sybmolic link 
+# (but is not necessary locally or on GitHub)
 /static/admin/
 
-# Log and cache files
+# Django cache files
 *.log
 *.pot
 *.mo
@@ -32,18 +35,23 @@ db.sqlite3-journal
 *.coverage
 *.coverage.*
 
-# IDE/editor files
+# Editor and IDE settings
 .vscode/
 .idea/
+.spyderproject
+.spyproject
 *.sublime-project
 *.sublime-workspace
 
-# OS files
+# Operating system files
 .DS_Store
 Thumbs.db
 desktop.ini
 
+# Pipenv and Poetry
+.python-version
+
 # Coverage reports
 htmlcov/
 .coverage
-
+.coverage.*
