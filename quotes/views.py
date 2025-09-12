@@ -5,6 +5,7 @@ import random
 
 # Create your views here.
 
+# List of quotes
 
 quotes = [
     "Life is like riding a bicycle. To keep your balance you must keep moving.",
@@ -12,6 +13,8 @@ quotes = [
     "Try not to become a man of success, but rather try to become a man of value."
 ]
 
+
+# List of images
 images = [
     "https://upload.wikimedia.org/wikipedia/commons/d/d3/Albert_Einstein_Head.jpg",
     "https://cdn.britannica.com/09/75509-050-86D8CBBF/Albert-Einstein.jpg",
@@ -24,12 +27,16 @@ images = [
 
 def home(request):
 
+    """Render the home page template."""
+
     template_name='quotes/home.html'
 
 
     return render(request,template_name)
 
 def quote(request):
+
+    """Render a page showing a random quote and image."""
 
 
     context = {
@@ -46,6 +53,10 @@ def quote(request):
 def show_all(request):
 
 
+    """Render a page displaying all quotes and images."""
+
+
+
     context = {
         "quotes": quotes,
         "images": images
@@ -58,6 +69,8 @@ def show_all(request):
 
 
 def about(request):
+
+    """Render the about page with information about the person and creator."""
 
 
     template_name='quotes/about.html'

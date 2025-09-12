@@ -1,3 +1,8 @@
+<!-- File: home.py
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description: this is the base html file
+-->
+
 
 {% load static %}
 <!DOCTYPE html>
@@ -10,10 +15,10 @@
     <header>
         <h1>Quotes App</h1>
         <nav>
-            <a href="/">Home</a> |
-            <a href="/quote">Quote</a> |
-            <a href="/show_all">Show All</a> |
-            <a href="/about">About</a>
+            <a href="{% url 'quote' %}">Home</a> |
+            <a href="{% url 'quote' %}">Quote</a> |
+            <a href="{% url 'show_all' %}">Show All</a> |
+            <a href="{% url 'about' %}">About</a>
         </nav>
     </header>
     <hr>
