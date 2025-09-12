@@ -22,7 +22,7 @@ images = [
 
 
 
-def home_page(request):
+def home(request):
 
     template_name='quotes/home.html'
 
