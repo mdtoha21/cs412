@@ -1,0 +1,62 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant App</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Place your order here</h1>
+
+        
+        <nav>
+            <a href="{% url 'home' %}">Home</a> |
+          
+        </nav>
+    </header>
+   <hr>
+
+
+   <form action="{%url 'submit' %}" method="POST">
+       {% csrf_token %} 
+
+        <!-- Flavors -->
+        <h3>Choose your flavor</h3> 
+        <input type="checkbox" name="flavor" value="chocolate" id="f1"> Chocolate <br>
+        <input type="checkbox" name="flavor" value="vanilla" id="f2"> Vanilla <br>
+        <input type="checkbox" name="flavor" value="strawberry" id="f3"> Strawberry <br>
+        <input type="checkbox" name="flavor" value="mango" id="f4"> Mango <br>
+        <input type="checkbox" name="flavor" value="oreo" id="f5"> Oreo <br>
+
+      <!-- Size -->
+        <h3>Size</h3>
+        <input type="radio" name="size" value="small" id="small"> Small $3<br>
+        <input type="radio" name="size" value="medium" id="medium"> Medium $5<br>
+        <input type="radio" name="size" value="large" id="large"> Large $7<br>
+
+        <!-- Toppings -->
+        <h3>Toppings</h3>
+        <input type="checkbox" name="topping" value="chocolate_chip" id="t1"> Chocolate Chip <br>
+        <input type="checkbox" name="topping" value="chocolate" id="t2"> Chocolate <br>
+        <input type="checkbox" name="topping" value="sprinkles" id="t3"> Sprinkles <br>
+
+        Provide you adress here: <br>
+        <input type="text" name="adress">
+
+        <input type="submit" value="Place Order">
+
+
+
+
+
+
+   </form>
+
+   
+    
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

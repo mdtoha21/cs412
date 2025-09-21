@@ -1,0 +1,26 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant App</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Dolce Icecream</h1>
+
+        <img src="https://media.timeout.com/images/105804827/image.jpg" alt="image" width="300px">
+        <nav>
+            <a href="{% url 'home' %}">Home</a> |
+            <a href="{% url 'order' %}">click here to order</a>
+           
+          
+        </nav>
+    </header>
+    <hr>
+    
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
