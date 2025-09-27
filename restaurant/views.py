@@ -31,6 +31,8 @@ def submit(request):
         flavors = request.POST.getlist("flavor")
         toppings = request.POST.getlist("topping")
 
+     
+
         ready_time = datetime.now() + timedelta(minutes=15)
 
         size = request.POST.get("size")
