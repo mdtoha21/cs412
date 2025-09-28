@@ -7,10 +7,14 @@
 {% for profile in profiles%}
    <div>
 
+
+     <a href="{% url 'show_profile' profile.pk %}">
+
+      <img src="{{ profile.profile_image_url }}" alt="{{ profile.username }}'s profile picture" style="width:250px;height:250px;border-radius:8px;object-fit:cover;"><br>
       {{profile.username}} <br>
       {{profile.display_name}} <br>
 
-      <img src="{{ profile.profile_image_url }}" alt="{{ profile.username }}'s profile picture">
+      <br>
 
 
 
