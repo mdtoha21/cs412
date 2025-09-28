@@ -1,0 +1,23 @@
+<!-- File: home.py
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description: this is the base html file
+-->
+
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mini_Insta App</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Mini_insta App</h1>
+        
+    </header>
+    <main></main>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
