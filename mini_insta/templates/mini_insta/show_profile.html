@@ -20,12 +20,29 @@ This is the html file showing a single profile of mini_intsa app.
          alt="{{ profile.username }}'s profile picture" 
          style="width:250px;height:250px;border-radius:8px;object-fit:cover;">
 
-<br>
-
+<br> <br> 
 joined on {{profile.join_date}} <br>
 
-{{profile.bio_text}}
+{{profile.bio_text}} <br>
 
+<h1>Posts by {{profile.display_name}}</h1>
+
+{% for post in profile.get_all_post %}
+        {% with first_photo=post.photo_set.first %}
+            {% if first_photo %}
+                <a href="{% url 'show_post' post.pk %}">
+                    <img src="{{ first_photo.image_url }}" 
+                         alt="Post photo" 
+                         style="width:300px;height:auto;border-radius:8px;margin:5px;">
+                </a>
+                {{}}
+            {% else %}
+                <div style="width:300px;height:300px;background:#eee;border-radius:8px;display:flex;align-items:center;justify-content:center;margin:5px;">
+                    No photo
+                </div>
+            {% endif %}
+        {% endwith %}
+{% endfor %}
 
  
 

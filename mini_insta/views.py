@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView
-from .models import Profile
+from .models import Profile, Post, Photo
 from django.views.generic import DetailView
 
 
@@ -15,11 +15,19 @@ class  ProfileListView(ListView):
 
 
 class ProfileDetailView(DetailView):
-    '''Define a view class to show a singlr mini_insta profiles'''
+    '''Define a view class to show a single mini_insta profiles'''
 
     model=Profile
     template_name="mini_insta/show_profile.html"
     context_object_name="profile"
+
+
+
+class PostDetailView(DetailView):
+    model=Post
+    template_name="mini_insta/show_post.html"
+    context_object_name="post"
+
 
 
 

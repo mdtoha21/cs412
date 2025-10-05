@@ -1,0 +1,44 @@
+<!-- File: home.py
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description: this is the base html file
+-->
+
+
+
+
+
+{% extends "mini_insta/base.html" %}
+
+{% block content %}
+
+    <header>
+        <h1>    </h1>    
+    </header>
+    <main>
+        <h1>Post by {{ post.profile.username }}</h1>
+
+        
+        
+        <p><small>Posted at: {{ post.timestamp }}</small></p>
+        <p>{{ post.caption }}</p>
+    
+        <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
+            {% for photo in post.get_all_photo %}
+                <img src="{{ photo.image_url }}" 
+                     alt="Post Photo" 
+                     style="width:300px; height:auto; border-radius:8px;">
+            {% empty %}
+                <p>No photos for this post.</p>
+            {% endfor %}
+        </div>
+        
+    
+        
+    </main>
+    <hr>
+
+    
+    
+    {% endblock %}
+</body>
+</html>
