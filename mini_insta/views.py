@@ -5,7 +5,7 @@ from django.views.generic import DetailView, CreateView
 from .forms import CreatePostForm
 from django.shortcuts import get_object_or_404
 
-
+from django.urls import reverse
 # Create your views here.
 
 
@@ -26,18 +26,26 @@ class ProfileDetailView(DetailView):
 
 
 class PostDetailView(DetailView):
+    """ Display a single Post, including its caption, timestamp, and photos."""
+
     model=Post
     template_name="mini_insta/show_post.html"
     context_object_name="post"
 
 
 class CreatePostView(CreateView):
+    '''Allow users to create a new Post associated with a specific Profile.
+'''
     model = Post
     form_class = CreatePostForm
     template_name = "mini_insta/create_post_form.html"
 
 
     def get_context_data(self, **kwargs):
+
+        '''Add the Profile object to the context data
+        so the form knows which Profile this Post belongs to.'''
+
         context = super().get_context_data(**kwargs)
         profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
         context['profile'] = profile
@@ -45,6 +53,7 @@ class CreatePostView(CreateView):
 
 
     def form_valid(self, form):
+        ''' Attaches the Post to the correct Profile and creates an associated Photo.'''
         profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
         post = form.save(commit=False)
         post.profile = profile
@@ -60,6 +69,8 @@ class CreatePostView(CreateView):
         return super().form_valid(form)
     
     def get_success_url(self):
+
+        '''     Redirect the user to the new Post's detail page after creation.'''
         return reverse('show_post', args=[self.object.pk])
 
 

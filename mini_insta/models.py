@@ -14,10 +14,11 @@ class Profile(models.Model):
     def __str__(self):
 
 
-
         return f'{self.display_name}'
     
     def get_all_post(self):
+       
+       ''' Retrieve all posts made by this profile, ordered by most recent first.'''
 
        posts=Post.objects.filter(profile=self).order_by('-timestamp')
 
@@ -26,6 +27,7 @@ class Profile(models.Model):
 
 
 class Post(models.Model):
+    ''''  Represents a post created by a user.'''
 
 
     profile=models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -39,18 +41,22 @@ class Post(models.Model):
         return f'{self.profile}'
     
     def get_all_photo(self):
+        """
+        Retrieve all photos associated with this post.
+        """
 
         photos=Photo.objects.filter(post=self)
 
         return photos
     
-    
+
     
 
 
 
 class Photo(models.Model):
 
+    '''    Represents a photo attached to a post.'''
 
     post=models.ForeignKey(Post, on_delete=models.CASCADE)
     image_url=models.URLField(blank=True)
