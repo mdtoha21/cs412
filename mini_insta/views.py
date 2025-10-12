@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 from .models import Profile, Post, Photo
-from django.views.generic import DetailView, CreateView, UpdateView
-from .forms import CreatePostForm, UpdateProfileForm
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
 from django.shortcuts import get_object_or_404
 
 from django.urls import reverse
@@ -83,6 +83,9 @@ class CreatePostView(CreateView):
 
 
 class UpdateProfileView(UpdateView):
+    '''View to update a user's profile information.
+
+    Inherits from Django's generic UpdateView.'''
 
     model=Profile
     form_class=UpdateProfileForm
@@ -92,3 +95,46 @@ class UpdateProfileView(UpdateView):
 
 
 
+class UpdatePostView(UpdateView):
+
+    ''''View to update a Post's information.
+
+    Inherits from Django's generic UpdateView.'''
+
+    model = Post
+    form_class = UpdatePostForm
+    template_name = 'mini_insta/update_post_form.html'
+
+    def get_success_url(self):
+        ''' After successfully updating a Post, redirect to the page
+        showing that Post.'''
+
+        return reverse('show_post', args=[self.object.pk])
+    
+
+class DeletePostView(DeleteView):
+    ''' View to delete a Post.
+
+    Inherits from Django's generic DeleteView.'''
+
+    model = Post
+    template_name = 'mini_insta/delete_post_form.html'
+    context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        '''Add extra context to the template: the Post object and the Profile
+        of the user who created the Post.'''
+
+        context = super().get_context_data(**kwargs)
+        post = self.get_object()
+        context['post'] = post
+        context['profile'] = post.profile 
+        return context
+
+    def get_success_url(self):
+        '''After deleting a Post, redirect to the Profile page of the user
+        who created the Post.'''
+        
+        post = self.get_object()
+        profile = post.profile
+        return reverse('show_profile', args=[profile.pk])  
