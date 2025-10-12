@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 from .models import Profile, Post, Photo
-from django.views.generic import DetailView, CreateView
-from .forms import CreatePostForm
+from django.views.generic import DetailView, CreateView, UpdateView
+from .forms import CreatePostForm, UpdateProfileForm
 from django.shortcuts import get_object_or_404
 
 from django.urls import reverse
@@ -79,6 +79,14 @@ class CreatePostView(CreateView):
         '''     Redirect the user to the new Post's detail page after creation.'''
         return reverse('show_post', args=[self.object.pk])
 
+
+
+
+class UpdateProfileView(UpdateView):
+
+    model=Profile
+    form_class=UpdateProfileForm
+    template_name="mini_insta/update_profile_form.html"
 
 
 

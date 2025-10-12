@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 # Create your models here.
 class Profile(models.Model):
 
@@ -23,6 +23,10 @@ class Profile(models.Model):
        posts=Post.objects.filter(profile=self).order_by('-timestamp')
 
        return posts
+    
+    def get_absolute_url(self):
+        # redirect back to the profile page after update
+        return reverse('show_profile', args=[self.pk])
 
 
 
