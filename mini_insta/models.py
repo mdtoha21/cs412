@@ -60,14 +60,29 @@ class Photo(models.Model):
 
     post=models.ForeignKey(Post, on_delete=models.CASCADE)
     image_url=models.URLField(blank=True)
+    image_file=models.ImageField(blank=True)
     timestamp=models.DateTimeField(auto_now=True)
+
+
+
 
 
     def __str__(self):
 
+        if self.image_file:
+            return f"Photo (file): {self.image_file.url}"
+        elif self.image_url:
 
+            return f"Photo (file): {self.image_url}"
+        else:
+            return 'No image'
 
-        return f'{self.post}'
+    def get_image_url(self):
+
+        if self.image_file:
+            return self.image_file.url
+        
+        return self.image_url
 
 
 
