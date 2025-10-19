@@ -29,6 +29,7 @@ class Profile(models.Model):
         return reverse('show_profile', args=[self.pk])
     
     def get_followers(self):
+        ''''Retrieve all profiles that are following this profile.'''
 
         follows=Follow.objects.filter(profile=self)
         followers=[f.follower_profile for f in follows]
@@ -58,7 +59,7 @@ class Profile(models.Model):
                
                following_profiles = self.get_following()
                posts = Post.objects.filter(profile__in=following_profiles).order_by('-timestamp')
-               
+
     def get_post_feed(self):
         """
         Retrieve posts from all profiles this profile is following.
@@ -148,6 +149,7 @@ class Photo(models.Model):
 
 
 class Follow(models.Model):
+    '''Represents a following relationship between two Profile objects.'''
 
     profile=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name="main_profile")
     follower_profile=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name="follower_profile")
@@ -161,6 +163,8 @@ class Follow(models.Model):
 
 
 class Comment(models.Model):
+
+    '''  Represents a comment made by a Profile on a Post'''
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now=True)
@@ -171,6 +175,9 @@ class Comment(models.Model):
     
 
 class Like(models.Model):
+
+    ''' Represents a "like" action by a Profile on a Post.'''
+    
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now=True)
