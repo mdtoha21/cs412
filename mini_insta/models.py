@@ -54,6 +54,25 @@ class Profile(models.Model):
         """Return the number of profiles this profile is following."""
         return Follow.objects.filter(follower_profile=self).count()
     
+    def get_post_feed(self):
+               
+               following_profiles = self.get_following()
+               posts = Post.objects.filter(profile__in=following_profiles).order_by('-timestamp')
+               
+    def get_post_feed(self):
+        """
+        Retrieve posts from all profiles this profile is following.
+        Returns a QuerySet of Post objects, ordered by newest first.
+        """
+        # Get profiles this profile is following
+        following_profiles = self.get_following()
+        
+        # Retrieve all posts from these profiles, newest first
+        posts = Post.objects.filter(profile__in=following_profiles).order_by('-timestamp')
+        
+        return posts
+
+    
 
 
 class Post(models.Model):

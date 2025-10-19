@@ -1,0 +1,56 @@
+
+{% extends "mini_insta/base.html" %}
+
+{% block content %}
+
+
+<h2>{{ profile.display_name }}'s Feed</h2>
+
+{% for post in posts %}
+    <div class="post-card">
+        <!-- Author Info -->
+        <div class="author-info">
+            {% if post.profile.profile_image_url %}
+                <img src="{{ post.profile.profile_image_url }}" alt="{{ post.profile.display_name }}" width="50" height="50">
+            {% endif %}
+            <strong>{{ post.profile.display_name }}</strong>
+        </div>
+
+        <!-- Post Photo -->
+        {% with post.get_all_photo|first as first_photo %}
+            {% if first_photo %}
+                <img src="{{ first_photo.get_image_url }}" alt="Post Image" width="300">
+            {% endif %}
+        {% endwith %}
+
+        <!-- Likes -->
+        <p><strong>{{ post.get_num_likes }} Likes</strong></p>
+
+        <!-- Caption -->
+        <p>{{ post.caption }}</p>
+
+        <!-- Comments -->
+        <div class="comments-section">
+            {% for comment in post.get_all_comments %}
+                <p><strong>{{ comment.profile.display_name }}:</strong> {{ comment.text }}</p>
+            {% empty %}
+                <p>No comments yet.</p>
+            {% endfor %}
+        </div>
+
+        <hr>
+    </div>
+{% empty %}
+    <p>No posts to display.</p>
+{% endfor %}
+
+<!-- Link back to profile page -->
+<p><a href="{% url 'show_profile' profile.pk %}">Back to Profile</a></p>
+
+
+
+
+
+
+
+{% endblock %}

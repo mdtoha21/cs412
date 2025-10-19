@@ -14,7 +14,7 @@ This is the html file showing a single profile of mini_intsa app.
 
 {% block content %}
 
-
+<a href="{% url 'show_feed' profile.pk %}">Home</a>
 <h1>{{ profile.display_name}}</h1>
 <img src="{{ profile.profile_image_url }}" 
          alt="{{ profile.username }}'s profile picture" 
