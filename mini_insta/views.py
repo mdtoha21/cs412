@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView
-from .models import Profile, Post, Photo
+from .models import Profile, Post, Photo,Follow
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
 from django.shortcuts import get_object_or_404
@@ -138,3 +138,27 @@ class DeletePostView(DeleteView):
         post = self.get_object()
         profile = post.profile
         return reverse('show_profile', args=[profile.pk])  
+
+
+class ShowFollowersDetailView(DetailView):
+
+    model=Profile
+    template_name = "mini_insta/show_followers.html"
+    context_object_name = "profile"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # get the followers using the accessor method in the model
+        context["followers"] = self.object.get_followers()
+        return context
+class ShowFollowingDetailView(DetailView):
+    model = Profile
+    template_name = "mini_insta/show_following.html"
+    context_object_name = "profile"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # get the following list using the accessor method in the model
+        context["following"] = self.object.get_following()
+        return context
+    

@@ -1,0 +1,27 @@
+{% extends "mini_insta/base.html" %}
+
+{% block content %}
+
+
+{% if profile.get_following %}
+    
+    <ul>
+        {% for following in profile.get_following %}
+            <li>
+                <a href="{% url 'show_profile' following.pk %}">
+                    {{ following.display_name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No followings yet.</p>
+{% endif %}
+
+
+<a href="{% url 'show_profile' profile.pk %}">Back to Profile</a>
+
+
+
+
+{% endblock %}

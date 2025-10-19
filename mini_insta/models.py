@@ -27,7 +27,33 @@ class Profile(models.Model):
     def get_absolute_url(self):
         # redirect back to the profile page after update
         return reverse('show_profile', args=[self.pk])
+    
+    def get_followers(self):
 
+        follows=Follow.objects.filter(profile=self)
+        followers=[f.follower_profile for f in follows]
+
+
+        return followers
+    
+
+
+    def get_num_followers(self):
+        """Return the number of followers."""
+        return Follow.objects.filter(profile=self).count()
+
+
+    def get_following(self):
+        """Return a list of Profiles this profile is following."""
+        follows = Follow.objects.filter(follower_profile=self)
+        following = [f.profile for f in follows]
+        return following
+
+
+    def get_num_following(self):
+        """Return the number of profiles this profile is following."""
+        return Follow.objects.filter(follower_profile=self).count()
+    
 
 
 class Post(models.Model):
@@ -52,6 +78,18 @@ class Post(models.Model):
         photos=Photo.objects.filter(post=self)
 
         return photos
+    
+    def get_all_comments(self):
+        """Retrieve all comments on this post, ordered by most recent first."""
+        return Comment.objects.filter(post=self).order_by('-timestamp')
+    def get_likes(self):
+     
+     """Return a QuerySet of all likes on this post."""
+     return Like.objects.filter(post=self)
+    
+    def get_num_likes(self):
+      """Return the total number of likes on this post."""
+      return Like.objects.filter(post=self).count()
     
 
     
@@ -90,5 +128,37 @@ class Photo(models.Model):
 
 
 
+class Follow(models.Model):
+
+    profile=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name="main_profile")
+    follower_profile=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name="follower_profile")
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        follower_name = self.follower_profile.display_name or self.follower_profile.username
+        profile_name = self.profile.display_name or self.profile.username
+        return f"{follower_name} follows {profile_name}"
+
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+    text = models.TextField(blank=False)
+
+    def __str__(self):
+        return f'Comment by {self.profile.display_name} on {self.post.id}: {self.text[:30]}...'
+    
+
+class Like(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.profile.display_name} liked Post {self.post.id}'
+
+    
 
 

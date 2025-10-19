@@ -31,6 +31,18 @@ joined on {{profile.join_date}} <br>
 
 
 <h1>Posts by {{profile.display_name}}</h1>
+<br> <br> 
+joined on {{profile.join_date}} <br>
+{{profile.bio_text}} <br>
+
+<a href="{% url 'show_followers' profile.pk %}">
+    Followers: {{ profile.get_num_followers }}
+</a>
+|
+<a href="{% url 'show_following' profile.pk %}">
+    Following: {{ profile.get_num_following }}
+</a>
+<br><br>
 
 {% for post in profile.get_all_post %}
         {% with first_photo=post.photo_set.first %}

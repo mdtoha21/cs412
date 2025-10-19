@@ -17,6 +17,7 @@
         <h1>    </h1>    
     </header>
     <main>
+        <p><strong>{{ post.get_num_likes }} Likes</strong></p>
         <h1>Post by {{ post.profile.username }}</h1>
 
         
@@ -38,6 +39,22 @@
             {% empty %}
                 <p>No photos for this post.</p>
             {% endfor %}
+        </div>
+        <div class="comments-section">
+            <h4>Comments:</h4>
+            {% if post.get_all_comments %}
+                <ul>
+                    {% for comment in post.get_all_comments %}
+                        <li>
+                            <strong>{{ comment.profile.display_name }}:</strong>
+                            {{ comment.text }}
+                            <small>({{ comment.timestamp|date:"M d, Y H:i" }})</small>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No comments yet.</p>
+            {% endif %}
         </div>
         
     
