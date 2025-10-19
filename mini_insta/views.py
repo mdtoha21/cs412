@@ -4,7 +4,7 @@ from .models import Profile, Post, Photo,Follow
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
 from django.shortcuts import get_object_or_404
-
+from django.db import models
 from django.urls import reverse
 # Create your views here.
 
@@ -177,4 +177,34 @@ class PostFeedListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['profile'] = Profile.objects.get(pk=self.kwargs['pk'])
+        return context
+    
+
+class SearchView(ListView):
+    template_name = 'mini_insta/search_results.html'
+    context_object_name = 'posts'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
+        self.query = self.request.GET.get('query', None)
+        if not self.query:
+            # If no query, show search form
+            return render(request, 'mini_insta/search.html', {'profile': self.profile})
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        # Return Posts whose caption contains the query
+        return Post.objects.filter(caption__icontains=self.query)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Profiles matching the query in username, display_name, or bio_text
+        matching_profiles = Profile.objects.filter(
+            models.Q(username__icontains=self.query) |
+            models.Q(display_name__icontains=self.query) |
+            models.Q(bio_text__icontains=self.query)
+        )
+        context['profile'] = self.profile
+        context['query'] = self.query
+        context['matching_profiles'] = matching_profiles
         return context
