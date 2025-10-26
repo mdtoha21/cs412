@@ -21,7 +21,7 @@
     </header>
     <main>
         {% if user.is_authenticated %}
-            <p>Logged in as: {{ user.username }} | /p>
+            <p>Logged in as: {{ user.username }} | </p>
         {% else %}
             <p><a href="{% url 'login' %}">Login</a></p>
          {% endif %}

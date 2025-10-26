@@ -6,6 +6,8 @@ from django.contrib.auth import views as auth_views
 from .views import ProfileListView, ProfileDetailView,PostDetailView
 from .views import LogoutConfirmationView
 from .views import DeletePostView
+
+from .forms import CreateProfileForm
 urlpatterns=[
 
 path('', ProfileListView.as_view(), name='show_all_profiles'),
@@ -30,6 +32,6 @@ path('profile/<int:pk>/search', views.SearchView.as_view(), name='search'),
 path('login/', auth_views.LoginView.as_view(template_name='mini_insta/login.html'), name='login'),
  path('logout/', auth_views.LogoutView.as_view(), name='logout'),
   path('logout/confirmation/', LogoutConfirmationView.as_view(template_name='mini_insta/logged_out.html'), name='logout_confirmation'),
-
+path('create_profile/', views.CreateProfileView.as_view(), name='create_profile'),
 
 ] 

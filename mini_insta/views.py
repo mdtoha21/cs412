@@ -6,7 +6,10 @@ from django.db import models
 from django.views.generic import TemplateView
 from .models import Profile, Post, Photo, Follow
 from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth import login
+from .forms import CreateProfileForm
 
 # ---------------- Mixins ----------------
 
@@ -170,6 +173,7 @@ class PostFeedListView(ProfileAccessMixin, ListView):
 
 
 class SearchView(ProfileAccessMixin, ListView):
+
     template_name = 'mini_insta/search_results.html'
     context_object_name = 'posts'
 
@@ -200,3 +204,33 @@ class SearchView(ProfileAccessMixin, ListView):
 
 class LogoutConfirmationView(TemplateView):
     template_name = "mini_insta/logged_out.html"
+
+
+
+class CreateProfileView(CreateView):
+    model = Profile
+    form_class = CreateProfileForm
+    template_name = "mini_insta/create_profile_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'user_form' not in context:
+            context['user_form'] = UserCreationForm()
+        return context
+
+    def form_valid(self, form):
+        # Reconstruct the UserCreationForm from POST data
+        user_form = UserCreationForm(self.request.POST)
+        if user_form.is_valid():
+            user = user_form.save()  # creates the User object
+            # Log the user in
+            login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
+            # Attach the user to the Profile instance
+            form.instance.user = user
+            return super().form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def get_success_url(self):
+        # Redirect to the logged-in user's profile page after registration
+        return reverse('show_profile',args=[self.object.pk])
