@@ -26,9 +26,11 @@ joined on {{profile.join_date}} <br>
 
 {{profile.bio_text}} <br>
 
-<a href="{% url 'create_post' profile.pk %}">Create a New Post</a> <br>
-
-<a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
+{% if user.is_authenticated and user == profile.user %}
+  <a href="{% url 'update_profile' %}">Update Profile</a> |
+  <a href="{% url 'create_post' %}">Create Post</a> |
+  <a href="{% url 'show_feed' profile.pk %}">Home</a>
+{% endif %}
 
 
 <h1>Posts by {{profile.display_name}}</h1>

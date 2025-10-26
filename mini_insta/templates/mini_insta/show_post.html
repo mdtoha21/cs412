@@ -24,9 +24,9 @@
         
         <p><small>Posted at: {{ post.timestamp }}</small></p>
 
-        <a href="{% url 'update_post' post.pk %}"> Update </a>
+        <a href="{% url 'update_post'  %}"> Update </a>
         <br>
-        <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger">Delete</a>
+        <a href="{% url 'delete_post'  %}" class="btn btn-danger">Delete</a>
 
 
         <p>{{ post.caption }}</p>

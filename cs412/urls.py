@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('quotes/', include("quotes.urls")),
     path('restaurant/', include("restaurant.urls")),
-    path('mini_insta/',include("mini_insta.urls"))
+    path('mini_insta/',include("mini_insta.urls")),
+    path('accounts/', include('django.contrib.auth.urls'))
 ]
 
 urlpatterns+=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
