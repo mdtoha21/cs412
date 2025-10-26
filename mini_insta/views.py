@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
-
+from django.views.generic import TemplateView
 from .models import Profile, Post, Photo, Follow
 from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
 
@@ -44,13 +44,14 @@ class LoggedInProfileDetailView(ProfileAccessMixin, DetailView):
         return self.get_profile()
 
 
-class UpdateProfileView(LoginRequiredMixin, UpdateView):
+class UpdateProfileView(ProfileAccessMixin,LoginRequiredMixin, UpdateView):
     model = Profile
     form_class = UpdateProfileForm
     template_name = "mini_insta/update_profile_form.html"
 
     def get_object(self):
-        return get_object()
+        # Return the Profile of the logged-in user
+        return self.get_profile()
 
     def get_login_url(self):
         return reverse('login')
@@ -64,7 +65,7 @@ class PostDetailView(DetailView):
     context_object_name = "post"
 
 
-class CreatePostView(LoginRequiredMixin, CreateView):
+class CreatePostView(ProfileAccessMixin,LoginRequiredMixin, CreateView):
     model = Post
     form_class = CreatePostForm
     template_name = "mini_insta/create_post_form.html"
@@ -100,9 +101,14 @@ class UpdatePostView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('show_post', args=[self.object.pk])
+    
+    def get_object(self):
+
+        # Example: update the latest post by the logged-in user
+        return Post.objects.filter(profile__user=self.request.user).last()
 
 
-class DeletePostView(LoginRequiredMixin, DeleteView):
+class DeletePostView(ProfileAccessMixin,LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'mini_insta/delete_post_form.html'
     context_object_name = 'post'
@@ -188,3 +194,9 @@ class SearchView(ProfileAccessMixin, ListView):
         context['query'] = self.query
         context['matching_profiles'] = matching_profiles
         return context
+    
+
+
+
+class LogoutConfirmationView(TemplateView):
+    template_name = "mini_insta/logged_out.html"

@@ -26,7 +26,7 @@
 
         <a href="{% url 'update_post'  %}"> Update </a>
         <br>
-        <a href="{% url 'delete_post'  %}" class="btn btn-danger">Delete</a>
+        <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger">Delete</a>
 
 
         <p>{{ post.caption }}</p>

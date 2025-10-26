@@ -21,10 +21,15 @@
     </header>
     <main>
         {% if user.is_authenticated %}
-            <p>Logged in as: {{ user.username }} | <a href="{% url 'logout' %}">Logout</a></p>
+            <p>Logged in as: {{ user.username }} | /p>
         {% else %}
             <p><a href="{% url 'login' %}">Login</a></p>
          {% endif %}
+
+         <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
 <hr>
 
     </main>
