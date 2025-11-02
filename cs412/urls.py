@@ -31,6 +31,8 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(
         next_page='logout_confirmation'  # if you have a confirmation view
     ), name='logout'),
+
+    path('voter_analytics/', include("voter_analytics.urls")),
 ]
 
 urlpatterns+=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

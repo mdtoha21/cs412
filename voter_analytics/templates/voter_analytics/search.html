@@ -1,0 +1,28 @@
+<!-- marathon_analytics/templates/marathon_analytics/search.html -->
+<h1>Search Form</h1>
+ 
+ 
+<table>
+    <form action="{% url 'voters_list' %}" method="get">
+        <table>
+          <tr>
+            <th>Party Affiliation:</th>
+            <td>
+              <select name="party_affiliation">
+                <option value="">-- All --</option>
+                <option value="D">Democrat (D)</option>
+                <option value="R">Republican (R)</option>
+                <option value="U">Unenrolled (U)</option>
+                <option value="G">Green (G)</option>
+                <option value="L">Libertarian (L)</option>
+              </select>
+            </td>
+          </tr>
+      
+          <tr>
+            <td><input type="submit" value="Search"></td>
+          </tr>
+        </table>
+      </form>
+</table>
+ 
