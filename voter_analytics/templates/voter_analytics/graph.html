@@ -1,0 +1,31 @@
+{% extends "voter_analytics/base.html" %}
+
+{% block content %}
+
+
+
+<h1>Voter Data Graphs</h1>
+
+<!-- Filter form -->
+<form method="get" action="{% url 'graphs' %}">
+    <label for="party">Party Affiliation:</label>
+    <select name="party_affiliation" id="party">
+        <option value="">--All--</option>
+        <option value="D">Democrat</option>
+        <option value="R">Republican</option>
+        <option value="U">Unenrolled</option>
+    </select>
+    <button type="submit">Filter</button>
+</form>
+
+<!-- Charts -->
+<h2>Distribution of Voters by Year of Birth</h2>
+{{ birth_chart|safe }}
+
+<h2>Voters by Party Affiliation</h2>
+{{ party_chart|safe }}
+
+<h2>Voter Participation per Election</h2>
+{{ participation_chart|safe }}
+
+{% endblock %}
