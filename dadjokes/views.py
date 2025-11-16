@@ -4,6 +4,7 @@ from .serializers import *
 from rest_framework.response import Response
 from django.shortcuts import render, get_object_or_404
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 app_name = 'dadjokes'
 def home(request):
     # show one random joke and one random picture
@@ -11,23 +12,26 @@ def home(request):
     picture = Picture.objects.order_by('?').first()
     return render(request, 'dadjokes/home.html', {'joke': joke, 'picture': picture})
 
+@api_view(['GET'])
 def random_page(request):
     joke = Joke.objects.order_by('?').first()
     picture = Picture.objects.order_by('?').first()
     return render(request, 'dadjokes/random.html', {'joke': joke, 'picture': picture})
 
+@api_view(['GET'])
 def jokes_list(request):
     jokes = Joke.objects.all().order_by('-created_at')
     return render(request, 'dadjokes/jokes.html', {'jokes': jokes})
 
+@api_view(['GET'])
 def joke_detail(request, pk):
     joke = get_object_or_404(Joke, pk=pk)
     return render(request, 'dadjokes/joke_detail.html', {'joke': joke})
-
+@api_view(['GET'])
 def pictures_list(request):
     pictures = Picture.objects.all().order_by('-created_at')
     return render(request, 'dadjokes/pictures.html', {'pictures': pictures})
-
+@api_view(['GET'])
 def picture_detail(request, pk):
     picture = get_object_or_404(Picture, pk=pk)
     return render(request, 'dadjokes/picture_detail.html', {'picture': picture})
