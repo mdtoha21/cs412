@@ -1,0 +1,6 @@
+{% extends "dadjokes/base.html" %}
+{% block content %}
+  <h1>Joke #{{ joke.id }}</h1>
+  <p>{{ joke.text }}</p>
+  <small>By {{ joke.contributor }} — {{ joke.created_at }}</small>
+{% endblock %}

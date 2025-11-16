@@ -1,0 +1,12 @@
+{% extends "dadjokes/base.html" %}
+{% block content %}
+  <h1>All Jokes</h1>
+  <ul>
+    {% for j in jokes %}
+      <li><a href="{% url 'dadjokes:joke_detail' j.id %}">{{ j.text|truncatechars:80 }}</a>
+          — {{ j.contributor }}</li>
+    {% empty %}
+      <li>No jokes yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

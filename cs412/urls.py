@@ -33,6 +33,7 @@ urlpatterns = [
     ), name='logout'),
 
     path('voter_analytics/', include("voter_analytics.urls")),
+     path('', include('dadjokes.urls')),
 ]
 
 urlpatterns+=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
