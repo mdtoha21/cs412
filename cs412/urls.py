@@ -23,7 +23,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url='/final_project/', permanent=False)),  # Redirect root to final_project
+    path('', RedirectView.as_view(url='final_project/', permanent=False)),  # Redirect root to final_project
     path('final_project/', include(("final_project.urls", "final_project"), namespace="final_project")),
     path('quotes/', include("quotes.urls")),
     path('restaurant/', include("restaurant.urls")),
