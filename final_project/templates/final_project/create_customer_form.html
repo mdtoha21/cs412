@@ -1,0 +1,102 @@
+<!-- File: create_customer_form.html
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description: This is the html file for creating a customer account (registration).
+-->
+
+{% extends "final_project/base.html" %}
+
+{% block content %}
+
+<div class="content">
+  <h1>Create Account</h1>
+
+  <form method="POST">
+      {% csrf_token %}
+      
+      {% if form.errors or user_form.errors %}
+        <div style="background-color: #fee; border: 1px solid #fcc; padding: 15px; margin: 10px 0; border-radius: 4px;">
+          <p><strong>Please correct the errors below:</strong></p>
+          {% if form.non_field_errors %}
+            <ul>
+              {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          {% if user_form.non_field_errors %}
+            <ul>
+              {% for error in user_form.non_field_errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endif %}
+      
+      <h2>Account Information</h2>
+      <p>
+          <label for="{{ user_form.username.id_for_label }}">Username:</label>
+          {{ user_form.username }}
+          {% if user_form.username.errors %}
+            <span style="color:red;">{{ user_form.username.errors }}</span>
+          {% endif %}
+      </p>
+      <p>
+          <label for="{{ user_form.password1.id_for_label }}">Password:</label>
+          {{ user_form.password1 }}
+          {% if user_form.password1.errors %}
+            <span style="color:red;">{{ user_form.password1.errors }}</span>
+          {% endif %}
+      </p>
+      <p>
+          <label for="{{ user_form.password2.id_for_label }}">Confirm Password:</label>
+          {{ user_form.password2 }}
+          {% if user_form.password2.errors %}
+            <span style="color:red;">{{ user_form.password2.errors }}</span>
+          {% endif %}
+      </p>
+      
+      <h2>Customer Information</h2>
+      <p>
+          <label for="{{ form.first_name.id_for_label }}">First Name:</label>
+          {{ form.first_name }}
+          {% if form.first_name.errors %}
+            <span style="color:red;">{{ form.first_name.errors }}</span>
+          {% endif %}
+      </p>
+      <p>
+          <label for="{{ form.last_name.id_for_label }}">Last Name:</label>
+          {{ form.last_name }}
+          {% if form.last_name.errors %}
+            <span style="color:red;">{{ form.last_name.errors }}</span>
+          {% endif %}
+      </p>
+      <p>
+          <label for="{{ form.email.id_for_label }}">Email:</label>
+          {{ form.email }}
+          {% if form.email.errors %}
+            <span style="color:red;">{{ form.email.errors }}</span>
+          {% endif %}
+      </p>
+      <p>
+          <label for="{{ form.phone.id_for_label }}">Phone:</label>
+          {{ form.phone }}
+          {% if form.phone.errors %}
+            <span style="color:red;">{{ form.phone.errors }}</span>
+          {% endif %}
+      </p>
+      <p>
+          <label for="{{ form.address.id_for_label }}">Address:</label>
+          {{ form.address }}
+          {% if form.address.errors %}
+            <span style="color:red;">{{ form.address.errors }}</span>
+          {% endif %}
+      </p>
+      
+      <button type="submit">Register</button>
+      <a href="{% url 'final_project:login' %}" class="button">Already have an account? Login</a>
+  </form>
+</div>
+
+{% endblock %}
+

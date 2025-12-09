@@ -1,0 +1,55 @@
+<!-- File: login.html
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description: This is the html file for user login.
+-->
+
+{% extends "final_project/base.html" %}
+
+{% block content %}
+
+<div class="content">
+  <h1>Login</h1>
+
+  <form method="POST">
+      {% csrf_token %}
+      {% if form.errors %}
+        <div class="message error" style="background-color: #fee; border: 1px solid #fcc; padding: 10px; margin: 10px 0; border-radius: 4px;">
+          <p><strong>Error:</strong> Please correct the errors below:</p>
+          {% if form.non_field_errors %}
+            <ul>
+              {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          {% if form.errors %}
+            <p>Invalid username or password. Please try again.</p>
+          {% endif %}
+        </div>
+      {% endif %}
+      
+      <p>
+          <label for="{{ form.username.id_for_label }}">Username:</label>
+          {{ form.username }}
+          {% if form.username.errors %}
+            <span style="color:red;">{{ form.username.errors }}</span>
+          {% endif %}
+      </p>
+      
+      <p>
+          <label for="{{ form.password.id_for_label }}">Password:</label>
+          {{ form.password }}
+          {% if form.password.errors %}
+            <span style="color:red;">{{ form.password.errors }}</span>
+          {% endif %}
+      </p>
+      
+      <input type="hidden" name="next" value="{% url 'final_project:show_all_restaurants' %}">
+      <button type="submit">Login</button>
+  </form>
+
+  <p>Don't have an account? <a href="{% url 'final_project:register' %}">Register here</a></p>
+</div>
+
+{% endblock %}
+

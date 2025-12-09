@@ -1,0 +1,39 @@
+<!-- File: base.html
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description: this is the base html file
+-->
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food Order App</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Food Order App</h1>
+    </header>
+    <main>
+        <nav>
+            <a href="{% url 'final_project:show_all_restaurants' %}">Browse Restaurants</a> |
+            <a href="{% url 'final_project:search_restaurants' %}">Search</a>
+            {% if user.is_authenticated %}
+                | <span>Logged in as: {{ user.username }}</span>
+                | <form action="{% url 'final_project:logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none;border:none;color:#667eea;cursor:pointer;text-decoration:underline;padding:0;margin:0;">Logout</button>
+                </form>
+            {% else %}
+                | <a href="{% url 'final_project:login' %}">Login</a> |
+                <a href="{% url 'final_project:register' %}">Create an Account</a>
+            {% endif %}
+        </nav>
+        <hr>
+    </main>
+    <hr>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
+

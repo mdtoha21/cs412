@@ -1,0 +1,49 @@
+<!-- File: show_order.html
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description: This is the html file showing the current order.
+-->
+
+{% extends "final_project/base.html" %}
+
+{% block content %}
+
+<div class="content">
+  <h1>Your Order</h1>
+
+  <div class="order-summary">
+    <p><strong>Restaurant:</strong> {{ order.restaurant.name }}</p>
+    <p><strong>Order Date:</strong> {{ order.order_date }}</p>
+    <p><strong>Total Price: ${{ order.total_price }}</strong></p>
+  </div>
+
+  <h2>Order Items</h2>
+  {% for order_item in order_items %}
+    <div class="order-item-card">
+      <h3>{{ order_item.menu_item.name }}</h3>
+      <p>Quantity: {{ order_item.quantity }}</p>
+      <p>Price per item: ${{ order_item.menu_item.price }}</p>
+      <p><strong>Subtotal: ${{ order_item.item_subtotal }}</strong></p>
+      <a href="{% url 'final_project:update_order_item' order_item.pk %}" class="button" style="margin-right: 10px;">Update</a>
+      <a href="{% url 'final_project:delete_order_item' order_item.pk %}" class="button">Delete</a>
+    </div>
+  {% empty %}
+    <div class="empty-state">
+      <p>Your order is empty.</p>
+    </div>
+  {% endfor %}
+
+  {% if order_items %}
+    <div style="margin-top: 20px;">
+      <a href="{% url 'final_project:complete_order' order.pk %}" class="button">Complete Order</a>
+    </div>
+  {% endif %}
+
+  <div style="margin-top: 20px;">
+    <a href="{% url 'final_project:show_restaurant' order.restaurant.pk %}" class="button" style="margin-right: 10px;">Back to Restaurant</a>
+    <a href="{% url 'final_project:show_all_restaurants' %}" class="button" style="margin-right: 10px;">Browse Restaurants</a>
+    <a href="{% url 'final_project:search_restaurants' %}" class="button">Search</a>
+  </div>
+</div>
+
+{% endblock %}
+

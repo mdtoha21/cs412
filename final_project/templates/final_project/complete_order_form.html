@@ -1,0 +1,52 @@
+<!-- File: complete_order_form.html
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description: This is the html file for completing an order.
+-->
+
+{% extends "final_project/base.html" %}
+
+{% block content %}
+
+<h1>Complete Your Order</h1>
+
+<p><strong>Restaurant:</strong> {{ order.restaurant.name }}</p>
+<p><strong>Total Price: ${{ order.total_price }}</strong></p>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    
+    <h2>Customer Information</h2>
+    <p>
+        <label for="{{ form.first_name.id_for_label }}">First Name:</label>
+        {{ form.first_name }}
+    </p>
+    <p>
+        <label for="{{ form.last_name.id_for_label }}">Last Name:</label>
+        {{ form.last_name }}
+    </p>
+    <p>
+        <label for="{{ form.email.id_for_label }}">Email:</label>
+        {{ form.email }}
+    </p>
+    <p>
+        <label for="{{ form.phone.id_for_label }}">Phone:</label>
+        {{ form.phone }}
+    </p>
+    <p>
+        <label for="{{ form.address.id_for_label }}">Address:</label>
+        {{ form.address }}
+    </p>
+    
+    <h2>Delivery Information</h2>
+    <p>
+        <label for="{{ order_form.delivery_address.id_for_label }}">Delivery Address:</label>
+        {{ order_form.delivery_address }}
+    </p>
+    
+    <button type="submit">Complete Purchase</button>
+    <a href="{% url 'final_project:show_order' order.pk %}">Cancel</a>
+</form>
+
+{% endblock %}
+

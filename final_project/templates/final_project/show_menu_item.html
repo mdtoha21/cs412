@@ -1,0 +1,37 @@
+<!-- File: show_menu_item.html
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description: This is the html file showing a single menu item.
+-->
+
+{% extends "final_project/base.html" %}
+
+{% block content %}
+
+<h1>{{ menu_item.name }}</h1>
+<p><strong>Restaurant:</strong> <a href="{% url 'final_project:show_restaurant' menu_item.restaurant.pk %}">{{ menu_item.restaurant.name }}</a></p>
+<p><strong>Description:</strong> {{ menu_item.description }}</p>
+<p><strong>Price: ${{ menu_item.price }}</strong></p>
+
+{% if menu_item.image %}
+  <img src="{{ menu_item.image.url }}" alt="{{ menu_item.name }}" style="width:300px;height:auto;border-radius:8px;margin:10px;">
+{% endif %}
+
+<h2>Add to Order</h2>
+
+<form method="POST" action="{% url 'final_project:add_to_order' menu_item.pk %}">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    
+    <p>
+        <label for="{{ form.quantity.id_for_label }}">Quantity:</label>
+        {{ form.quantity }}
+    </p>
+    
+    <button type="submit">Add to Order</button>
+    <a href="{% url 'final_project:show_restaurant' menu_item.restaurant.pk %}">Cancel</a>
+</form>
+
+<a href="{% url 'final_project:show_restaurant' menu_item.restaurant.pk %}">Back to Restaurant</a>
+
+{% endblock %}
+

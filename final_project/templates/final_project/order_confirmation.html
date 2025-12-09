@@ -1,0 +1,35 @@
+<!-- File: order_confirmation.html
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description: This is the html file showing order confirmation after purchase.
+-->
+
+{% extends "final_project/base.html" %}
+
+{% block content %}
+
+<h1>Order Confirmation</h1>
+
+<p>Thank you for your order!</p>
+
+<h2>Order Details</h2>
+<p><strong>Order #{{ order.id }}</strong></p>
+<p><strong>Customer:</strong> {{ order.customer.first_name }} {{ order.customer.last_name }}</p>
+<p><strong>Restaurant:</strong> {{ order.restaurant.name }}</p>
+<p><strong>Order Date:</strong> {{ order.order_date }}</p>
+<p><strong>Delivery Address:</strong> {{ order.delivery_address }}</p>
+<p><strong>Total Price: ${{ order.total_price }}</strong></p>
+
+<h2>Order Items</h2>
+{% for order_item in order_items %}
+  <div style="border:1px solid #ccc;padding:10px;margin:10px;border-radius:8px;">
+    <h3>{{ order_item.menu_item.name }}</h3>
+    <p>Quantity: {{ order_item.quantity }}</p>
+    <p>Price per item: ${{ order_item.menu_item.price }}</p>
+    <p>Subtotal: ${{ order_item.item_subtotal }}</p>
+  </div>
+{% endfor %}
+
+<a href="{% url 'final_project:show_all_restaurants' %}">Browse More Restaurants</a>
+
+{% endblock %}
+

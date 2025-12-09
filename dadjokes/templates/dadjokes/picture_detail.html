@@ -1,6 +1,0 @@
-{% extends "dadjokes/base.html" %}
-{% block content %}
-  <h1>Picture #{{ picture.id }}</h1>
-  <p><img src="{{ picture.image_url }}" alt="silly" style="max-width:500px"/></p>
-  <small>By {{ picture.contributor }} — {{ picture.created_at }}</small>
-{% endblock %}

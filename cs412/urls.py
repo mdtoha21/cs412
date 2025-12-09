@@ -16,24 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include 
+from django.views.generic import RedirectView
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', RedirectView.as_view(url='/final_project/', permanent=False)),  # Redirect root to final_project
+    path('final_project/', include(("final_project.urls", "final_project"), namespace="final_project")),
     path('quotes/', include("quotes.urls")),
     path('restaurant/', include("restaurant.urls")),
     path('mini_insta/',include("mini_insta.urls")),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('login/', auth_views.LoginView.as_view(
-        template_name='mini_insta/login.html'
-    ), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(
-        next_page='logout_confirmation'  # if you have a confirmation view
-    ), name='logout'),
-
+    # Login/Logout are handled in final_project.urls (not using django.contrib.auth.urls)
     path('voter_analytics/', include("voter_analytics.urls")),
-     path('', include('dadjokes.urls')),
 ]
 
 urlpatterns+=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

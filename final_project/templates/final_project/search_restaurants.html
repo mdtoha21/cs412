@@ -1,0 +1,68 @@
+<!-- File: search_restaurants.html
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description: This is the html file for searching restaurants.
+-->
+
+{% extends "final_project/base.html" %}
+
+{% block content %}
+
+<div class="content">
+  <h1>Search Restaurants</h1>
+
+  <form method="GET" action="{% url 'final_project:search_restaurants' %}">
+      {{ form.non_field_errors }}
+      
+      <p>
+          <label for="{{ form.query.id_for_label }}">Search (Name or Address):</label>
+          {{ form.query }}
+      </p>
+      
+      <p>
+          <label for="{{ form.cuisine_type.id_for_label }}">Cuisine Type:</label>
+          {{ form.cuisine_type }}
+      </p>
+      
+      <button type="submit" style="margin-right: 10px;">Search</button>
+      <a href="{% url 'final_project:show_all_restaurants' %}" class="button">Clear</a>
+  </form>
+
+  <div style="margin-bottom: 20px;">
+    <a href="{% url 'final_project:show_all_restaurants' %}" class="button">Browse All Restaurants</a>
+  </div>
+
+  {% if query or cuisine_type %}
+    <h2>Search Results</h2>
+    {% if restaurants %}
+      <p>Found {{ restaurants.count }} restaurant(s):</p>
+      {% for restaurant in restaurants %}
+        <div class="restaurant-card">
+          <a href="{% url 'final_project:show_restaurant' restaurant.pk %}">
+            {% if restaurant.image %}
+              <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}" style="width:250px;height:250px;object-fit:cover;">
+            {% endif %}
+            <h2>{{ restaurant.name }}</h2>
+            <p><strong>Cuisine:</strong> {{ restaurant.cuisine_type }}</p>
+            <p><strong>Address:</strong> {{ restaurant.address }}</p>
+            <p><strong>Phone:</strong> {{ restaurant.phone_number }}</p>
+          </a>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state">
+        <p>No restaurants found matching your search criteria.</p>
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="empty-state">
+      <p>Enter search criteria above to find restaurants.</p>
+    </div>
+  {% endif %}
+
+  <div style="margin-top: 20px;">
+    <a href="{% url 'final_project:show_all_restaurants' %}" class="button">Back to All Restaurants</a>
+  </div>
+</div>
+
+{% endblock %}
+

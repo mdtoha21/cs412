@@ -1,0 +1,28 @@
+<!-- File: show_all_restaurants.html
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description: This is the html file showing all restaurants.
+-->
+
+{% extends "final_project/base.html" %}
+
+{% block content %}
+
+<h1>Browse Restaurants</h1>
+
+{% for restaurant in restaurants %}
+   <div>
+     <a href="{% url 'final_project:show_restaurant' restaurant.pk %}">
+      {% if restaurant.image %}
+        <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}" style="width:250px;height:250px;border-radius:8px;object-fit:cover;"><br>
+      {% endif %}
+      <h2>{{ restaurant.name }}</h2>
+      <p>{{ restaurant.cuisine_type }}</p>
+      <p>{{ restaurant.address }}</p>
+      <p>{{ restaurant.phone_number }}</p>
+      <br>
+     </a>
+  </div>
+{% endfor %}
+
+{% endblock %}
+
