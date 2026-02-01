@@ -1,0 +1,28 @@
+<!-- 
+  File: show_all.html
+  Author: MD Toha (mdtoha@bu.edu)
+  Description: This HTML template displays all quotes and images 
+               passed from views.py, using loops to render them.
+-->
+
+
+
+{% extends "quotes/home.html" %}
+
+{% block content %}
+  <h1>All Quotes</h1>
+  <ul>
+    {% for q in quotes %}
+      <li>{{ q }}</li>
+    {% endfor %}
+  </ul>
+
+  <h1>All Images</h1>
+  <ul>
+    {% for i in images %}
+      <li>
+        <img src="{{ i }}" alt="picture" width="150">
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
