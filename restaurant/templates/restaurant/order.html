@@ -1,0 +1,39 @@
+<!-- 
+  File: order.html
+  Author: MD Toha (mdtoha@bu.edu)
+  Description: This HTML template displays the food ordering form for the restaurant.
+               Users can select menu items, the daily special, add special instructions,
+               and provide their contact information. The form posts data to the confirmation page.
+          
+-->
+
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<h2>Place Your Order</h2>
+
+<form method="post" action="/confirmation/">
+    {% csrf_token %}
+
+    <h3>Menu</h3>
+    <input type="checkbox" name="burger"> Burger ($9.99)<br>
+    <input type="checkbox" name="pizza"> Pizza ($12.99)<br>
+    <input type="checkbox" name="salad"> Salad ($7.99)<br>
+
+    <h3>Daily Special</h3>
+    <input type="checkbox" name="special">
+    {{ daily_special.name }} (${{ daily_special.price }})
+    <input type="hidden" name="special_price" value="{{ daily_special.price }}">
+
+    <h3>Special Instructions</h3>
+    <textarea name="instructions"></textarea>
+
+    <h3>Customer Info</h3>
+    Name: <input type="text" name="name"><br>
+    Phone: <input type="text" name="phone"><br>
+    Email: <input type="email" name="email"><br>
+
+    <br>
+    <button type="submit">Submit Order</button>
+</form>
+{% endblock %}

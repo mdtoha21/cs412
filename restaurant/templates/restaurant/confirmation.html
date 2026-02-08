@@ -1,0 +1,33 @@
+<!-- 
+  File: confirmation.html
+  Author: MD Toha (mdtoha@bu.edu)
+  Description: This HTML template displays the order confirmation page for the restaurant.
+               It shows customer information, the items ordered, the total price, 
+               any special instructions, and the expected ready time. 
+              
+-->
+
+
+
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<h2>Order Confirmation</h2>
+
+<p>Name: {{ name }}</p>
+<p>Phone:{{ phone }}</p>
+<p>Email:{{ email }}</p>
+
+<h3>Items Ordered</h3>
+<ul>
+    {% for item in ordered_items %}
+        <li>{{ item }}</li>
+    {% endfor %}
+</ul>
+
+<p>Total: ${{ total_price }}</p>
+
+<p>Special Instructions: {{ instructions }}</p>
+
+<p>Your order will be ready around {{ ready_time }}.</p>
+{% endblock %}

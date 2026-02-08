@@ -1,0 +1,32 @@
+<!-- File: home.py
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description: this is the base html file
+-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Pizza Spot
+    </title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>The Pizza Spot
+        </h1>
+        <nav>
+            <a href="/main">Home</a> |
+            <a href="/order">Order</a>
+        </nav>
+        <hr>
+    </header>
+    <img src="https://assets.simpleviewinc.com/simpleview/image/upload/crm/oklahoma/pizza-spot-2_AC99BA9D-D3F5-DAA8-85DF7C9AD5AA4548-ac99b5e9f1935e4_ac9a0aff-f599-951b-6061594b44a996d4.jpg" 
+    alt="Pizza Place" 
+    style="width:400px; height:auto;">
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

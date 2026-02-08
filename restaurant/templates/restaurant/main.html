@@ -1,0 +1,24 @@
+<!-- 
+  File: main.html
+  Author: MD Toha (mdtoha@bu.edu)
+  Description: This HTML template displays the main page for the restaurant,
+               including the name, location, hours of operation, and a photo.
+               It extends the base layout from restaurant/base.html.
+-->
+
+
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<h2>Welcome!</h2>
+
+<p>Location:123 Main Street, Boston</p>
+
+<h3>Hours</h3>
+<ul>
+    <li>Mon–Fri: 11am – 9pm</li>
+    <li>Sat–Sun: 12pm – 10pm</li>
+</ul>
+
+<img src="https://via.placeholder.com/300" alt="Restaurant photo">
+{% endblock %}
