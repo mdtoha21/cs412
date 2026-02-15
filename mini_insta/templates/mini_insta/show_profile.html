@@ -1,0 +1,14 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<div class="profile-detail">
+    <h2>{{ profile.display_name }}</h2>
+    <img src="{{ profile.profile_image_url }}" alt="{{ profile.display_name }}" width="300">
+    <p><strong>Username:</strong> {{ profile.username }}</p>
+    <p><strong>Bio:</strong> {{ profile.bio_text }}</p>
+    <p><strong>Joined:</strong> {{ profile.join_date }}</p>
+
+ 
+    <a href="{% url 'show_all_profiles' %}">Back to all profiles</a>
+</div>
+{% endblock %}

@@ -16,3 +16,5 @@ class Profile(models.Model):
 
         return f'{self.display_name}'
     
+
+    

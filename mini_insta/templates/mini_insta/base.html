@@ -1,0 +1,34 @@
+
+<!-- File: base.html
+# Author: MD Toha (mdtoha@bu.edu)
+# Description: Base HTML template for the Mini Insta app. 
+
+-->
+{% load static %}  
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mini Insta</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Mini Insta</h1>
+        <nav>
+            <a href="{% url 'show_all_profiles' %}">All Profiles</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+
+    </footer>
+</body>
+</html>
+
