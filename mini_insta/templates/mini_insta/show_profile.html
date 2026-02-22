@@ -1,14 +1,36 @@
-{% extends 'mini_insta/base.html' %}
+{% extends "mini_insta/base.html" %}
 
 {% block content %}
-<div class="profile-detail">
-    <h2>{{ profile.display_name }}</h2>
-    <img src="{{ profile.profile_image_url }}" alt="{{ profile.display_name }}" width="300">
-    <p><strong>Username:</strong> {{ profile.username }}</p>
-    <p><strong>Bio:</strong> {{ profile.bio_text }}</p>
-    <p><strong>Joined:</strong> {{ profile.join_date }}</p>
 
- 
-    <a href="{% url 'show_all_profiles' %}">Back to all profiles</a>
-</div>
+<h2>{{ profile.display_name }}</h2>
+<img src="{{ profile.profile_image_url }}" width="300">
+<p>@{{ profile.username }}</p>
+<p>{{ profile.bio_text }}</p>
+<p>Joined: {{ profile.join_date }}</p>
+
+<hr>
+<h3>Posts</h3>
+
+{% for post in profile.get_all_post %}
+  <div style="border:1px solid #ccc; padding:10px; margin-bottom:20px;">
+    
+    <a href="{% url 'show_post' post.pk %}">
+      {% with photos=post.get_all_photo %}
+        {% if photos %}
+          <img src="{{ photos.0.image_url }}" width="250">
+        {% else %}
+          <div style="width:250px;height:250px;background:#eee;display:flex;align-items:center;justify-content:center;">
+            No Image
+          </div>
+        {% endif %}
+      {% endwith %}
+    </a>
+
+    <p>{{ post.caption }}</p>
+    <small>{{ post.timestamp }}</small>
+  </div>
+{% empty %}
+  <p>No posts yet.</p>
+{% endfor %}
+
 {% endblock %}
