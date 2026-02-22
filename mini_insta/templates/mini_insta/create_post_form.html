@@ -1,0 +1,28 @@
+<!-- File: create_post_form.html
+Author: MD Toha (mdtoha@bu.edu)
+Description: Form for creating a new post associated with a specific profile.
+-->
+
+{% extends "mini_insta/base.html" %}
+
+{% block content %}
+
+
+
+<form method="POST" action="{% url 'create_post' profile.pk %}">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    {{ form.caption }}
+    <p><input type="url" name="image_url" placeholder="Enter image URL" required></p>
+
+    <button type="submit">Post</button>
+    <button type="button" onclick="window.history.back()">Cancel</button>
+</form>
+
+
+
+
+
+
+{% endblock %}

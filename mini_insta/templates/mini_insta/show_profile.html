@@ -1,36 +1,52 @@
+
+<!-- File: show_profile.html
+# Author: MD Toha (mdtoha@bu.edu)
+# Description: Template to display a single profile in Mini Insta.
+
+-->
+
+
+
+
 {% extends "mini_insta/base.html" %}
+
 
 {% block content %}
 
-<h2>{{ profile.display_name }}</h2>
-<img src="{{ profile.profile_image_url }}" width="300">
-<p>@{{ profile.username }}</p>
-<p>{{ profile.bio_text }}</p>
-<p>Joined: {{ profile.join_date }}</p>
 
-<hr>
-<h3>Posts</h3>
+<h1>{{ profile.display_name}}</h1>
+<img src="{{ profile.profile_image_url }}" 
+         alt="{{ profile.username }}'s profile picture" 
+         style="width:250px;height:250px;border-radius:8px;object-fit:cover;">
+
+<br> <br> 
+joined on {{profile.join_date}} <br>
+
+{{profile.bio_text}} <br>
+
+<a href="{% url 'create_post' profile.pk %}">Create a New Post</a>
+
+
+<h1>Posts by {{profile.display_name}}</h1>
 
 {% for post in profile.get_all_post %}
-  <div style="border:1px solid #ccc; padding:10px; margin-bottom:20px;">
-    
-    <a href="{% url 'show_post' post.pk %}">
-      {% with photos=post.get_all_photo %}
-        {% if photos %}
-          <img src="{{ photos.0.image_url }}" width="250">
-        {% else %}
-          <div style="width:250px;height:250px;background:#eee;display:flex;align-items:center;justify-content:center;">
-            No Image
-          </div>
-        {% endif %}
-      {% endwith %}
-    </a>
+        {% with first_photo=post.photo_set.first %}
+            {% if first_photo %}
 
-    <p>{{ post.caption }}</p>
-    <small>{{ post.timestamp }}</small>
-  </div>
-{% empty %}
-  <p>No posts yet.</p>
+                <a href="{% url 'show_post' post.pk %}">
+                    <img src="{{ first_photo.image_url }}" 
+                         alt="Post photo" 
+                         style="width:300px;height:auto;border-radius:8px;margin:5px;">
+                </a>
+           
+            {% else %}
+                <div style="width:300px;height:300px;background:#eee;border-radius:8px;display:flex;align-items:center;justify-content:center;margin:5px;">
+                    No photo
+                </div>
+            {% endif %}
+        {% endwith %}
 {% endfor %}
+
+ 
 
 {% endblock %}
