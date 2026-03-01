@@ -1,0 +1,60 @@
+<!-- File: search_results.html
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description:  This template displays the search results for the Mini_Insta application.
+    It shows two sections: 
+        1. Matching profiles based on the user's search query.
+        2. Matching posts that contain the search query in their captions.
+-->
+
+
+
+
+
+{% extends "mini_insta/base.html" %}
+
+{% block content %}
+
+
+<h2>Search Results for "{{ query }}"</h2>
+
+<!-- Profiles Matching Query -->
+<h3>Profiles</h3>
+{% if matching_profiles %}
+    <ul>
+        {% for p in matching_profiles %}
+            <li>
+                <a href="{% url 'show_profile' p.pk %}">{{ p.display_name }} ({{ p.username }})</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No matching profiles.</p>
+{% endif %}
+
+<!-- Posts Matching Query -->
+<h3>Posts</h3>
+{% if posts %}
+    {% for post in posts %}
+        <div class="post-card">
+            <p><strong>{{ post.profile.display_name }}:</strong> {{ post.caption }}</p>
+            {% with post.get_all_photo|first as first_photo %}
+                {% if first_photo %}
+                    <img src="{{ first_photo.get_image_url }}" alt="Post Image" width="300">
+                {% endif %}
+            {% endwith %}
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No matching posts.</p>
+{% endif %}
+
+<p><a href="{% url 'show_profile' profile.pk %}">Back to Profile</a></p>
+
+
+
+
+
+
+
+
+{% endblock %}
