@@ -24,7 +24,8 @@ joined on {{profile.join_date}} <br>
 
 {{profile.bio_text}} <br>
 
-<a href="{% url 'create_post' profile.pk %}">Create a New Post</a>
+<a href="{% url 'create_post' profile.pk %}">Create a New Post</a> <br>
+<a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
 
 
 <h1>Posts by {{profile.display_name}}</h1>
