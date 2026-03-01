@@ -17,12 +17,27 @@
     <main>
         <h1>Post by {{ post.profile.username }}</h1>
 
+
+
         
         
         <p><small>Posted at: {{ post.timestamp }}</small></p>
         <a href="{% url 'update_post' post.pk %}"> Update </a>
         <br>
         <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger">Delete</a>
+
+        <div class="likes-section">
+            <h4>Liked by:</h4>
+            {% if post.get_likes %}
+                <ul>
+                    {% for like in post.get_likes %}
+                        <li>{{ like.profile.username }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No likes yet.</p>
+            {% endif %}
+        </div>
        
 
         <p>{{ post.caption }}</p>
@@ -35,6 +50,22 @@
             {% empty %}
                 <p>No photos for this post.</p>
             {% endfor %}
+        </div>
+        <div class="comments-section">
+            <h4>Comments:</h4>
+            {% if post.get_all_comments %}
+                <ul>
+                    {% for comment in post.get_all_comments %}
+                        <li>
+                            <strong>{{ comment.profile.display_name }}:</strong>
+                            {{ comment.text }}
+                            <small>({{ comment.timestamp|date:"M d, Y H:i" }})</small>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No comments yet.</p>
+            {% endif %}
         </div>
         
     

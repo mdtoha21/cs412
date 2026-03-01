@@ -1,0 +1,40 @@
+<!-- File: show_followers.html
+# Author: MD Toha (mdtoha@bu.edu), 
+# Description: This template displays the list of followers for a given user profile
+    in the Mini_Insta app. If the profile has followers, their display names
+    are shown as clickable links that navigate to each follower's profile
+    page. If there are no followers, a message is shown instead.
+
+
+-->
+
+
+
+
+{% extends "mini_insta/base.html" %}
+
+{% block content %}
+
+
+{% if followers %}
+
+    <ul>
+        {% for follower in profile.get_followers %}
+            <li>
+                <a href="{% url 'show_profile' follower.pk %}">
+                    {{ follower.display_name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No followers yet.</p>
+{% endif %}
+
+
+<a href="{% url 'show_profile' profile.pk %}">Back to Profile</a>
+
+
+
+
+{% endblock %}
