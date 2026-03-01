@@ -50,16 +50,21 @@ class CreatePostView(CreateView):
         post.save()
 
  
-        image_url = self.request.POST.get('image_url')
-        if image_url:
-            Photo.objects.create(post=post, image_url=image_url)
+        #image_url = self.request.POST.get('image_url')
+        #if image_url:
+            #Photo.objects.create(post=post, image_url=image_url)
         
-        self.object = post
+        #self.object = post 
+        files = self.request.FILES.getlist('files')
+
+        for f in files:
+            Photo.objects.create(post=post, image_file=f)
+
+        self.object=post
 
         return super().form_valid(form)
     
     def get_success_url(self):
-         '''     Redirect the user to the new Post's detail page after creation.'''
 
-
-         return reverse('show_post', args=[self.object.pk])
+        '''     Redirect the user to the new Post's detail page after creation.'''
+        return reverse('show_post', args=[self.object.pk])

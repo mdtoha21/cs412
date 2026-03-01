@@ -9,15 +9,16 @@ Description: Form for creating a new post associated with a specific profile.
 
 
 
-<form method="POST" action="{% url 'create_post' profile.pk %}">
+<form method="POST" enctype="multipart/form-data" action="{% url 'create_post' profile.pk %}">
     {% csrf_token %}
-    {{ form.non_field_errors }}
+    
+    {{ form.as_p }}
 
-    {{ form.caption }}
-    <p><input type="url" name="image_url" placeholder="Enter image URL" required></p>
+    <label>Upload Photos:</label>
+    <input type="file" name="files" multiple>
 
-    <button type="submit">Post</button>
-    <button type="button" onclick="window.history.back()">Cancel</button>
+    <button type="submit">Submit</button>
+    <a href="{% url 'show_profile' profile.pk %}">Cancel</a>
 </form>
 
 

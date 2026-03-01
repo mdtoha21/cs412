@@ -34,7 +34,7 @@ joined on {{profile.join_date}} <br>
             {% if first_photo %}
 
                 <a href="{% url 'show_post' post.pk %}">
-                    <img src="{{ first_photo.image_url }}" 
+                    <img src="{{ first_photo.get_image_url }}"
                          alt="Post photo" 
                          style="width:300px;height:auto;border-radius:8px;margin:5px;">
                 </a>
