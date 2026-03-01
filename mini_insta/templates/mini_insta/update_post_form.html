@@ -1,0 +1,29 @@
+
+<!-- File: mini_insta/templates/mini_insta/update_post.html
+Author: MD Toha (mdtoha@bu.edu)
+Description:  Template to display a form for  updating  a specific post made by a profile.
+-->
+
+{% extends "mini_insta/base.html" %}
+
+{% block content %}
+
+
+<h1>Update a Profile</h1>
+
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <table>
+
+        {{form.as_table}}
+
+    </table>
+  
+
+    <button type="submit">Update</button>
+    <button type="button" onclick="window.history.back()">Cancel</button>
+</form>
+{% endblock %}
