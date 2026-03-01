@@ -149,3 +149,21 @@ class ShowFollowingDetailView(DetailView):
         # get the following list using the accessor method in the model
         context["following"] = self.object.get_following()
         return context
+    
+
+class PostFeedListView(ListView):
+    model = Post
+    template_name = 'mini_insta/show_feed.html'
+    context_object_name = 'posts'  # accessible in template as 'posts'
+
+
+    def get_queryset(self):
+        # Retrieve the profile based on the pk in URL
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        return profile.get_post_feed()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile'] = Profile.objects.get(pk=self.kwargs['pk'])
+        return context
+    
