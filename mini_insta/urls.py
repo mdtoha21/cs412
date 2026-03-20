@@ -10,7 +10,7 @@ urlpatterns = [
     path('post/<int:pk>/update', UpdatePostView.as_view(), name='update_post'),
     path('post/<int:pk>/delete', DeletePostView.as_view(), name='delete_post'),
     path('profile/<int:pk>/followers', ShowFollowersDetailView.as_view(), name='show_followers'),
-path('profile/<int:pk>/following', ShowFollowingDetailView.as_view(), name='show_following'),
-path('profile/<int:pk>/feed', views.PostFeedListView.as_view(), name='show_feed'),
-path('profile/<int:pk>/search', views.SearchView.as_view(), name='search'),
+    path('profile/<int:pk>/following', ShowFollowingDetailView.as_view(), name='show_following'),
+    path('profile/<int:pk>/feed', views.PostFeedListView.as_view(), name='show_feed'),
+    path('profile/<int:pk>/search', views.SearchView.as_view(), name='search'),
 ]

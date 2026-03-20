@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 1rem;
+    background-color: #fafafa;
+}
+
+header h1 {
+    margin: 0 0 0.5rem 0;
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #3897f0;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    min-height: 40vh;
+    padding: 1rem 0;
+}
+
+footer {
+    margin-top: 2rem;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.profiles-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.profiles-table th,
+.profiles-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #efefef;
+}
+
+.profiles-table th {
+    background-color: #fafafa;
+    font-weight: 600;
+}
+
+.profile-image {
+    max-width: 64px;
+    max-height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.no-image {
+    color: #999;
+    font-style: italic;
+}
