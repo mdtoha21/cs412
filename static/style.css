@@ -4,8 +4,64 @@ body {
     text-align: center;
 }
 
+ul {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+nav ul,
+.pagination {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.no-bullets {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
 nav a {
     margin: 0 10px;
     text-decoration: none;
     color: blue;
+}
+
+.voter-table {
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 72px 14px;
+}
+
+.voter-table th,
+.voter-table td {
+    padding: 18px 44px;
+}
+
+.filter-form {
+    width: fit-content;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.filter-form table {
+    margin: 0;
+}
+
+.filter-form th,
+.filter-form td {
+    text-align: left;
+    padding: 6px 10px;
+}
+
+.voter-detail {
+    width: fit-content;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.voter-detail table {
+    margin: 0 auto;
 }

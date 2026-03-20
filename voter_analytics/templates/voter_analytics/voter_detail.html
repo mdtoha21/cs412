@@ -1,0 +1,62 @@
+<!-- voter_analytics/templates/voter_analytics/results.html -->
+{% extends 'voter_analytics/base.html' %}
+ 
+ 
+{% block content %}
+
+
+<div class="voter-detail" style="display: table; margin: 0 auto; text-align: left;">
+<h2>Voter Detail</h2>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <td>{{ voter.first_name }} {{ voter.last_name }}</td>
+  </tr>
+  <tr>
+    <th>Address</th>
+    <td>
+      {% with full_address=voter.street_number|default_if_none:""|add:" "|add:voter.street_name|add:", "|add:voter.zip_code %}
+      <a href="https://www.google.com/maps/search/?api=1&amp;query={{ full_address|urlencode }}" target="_blank" rel="noopener noreferrer">
+        {{ voter.street_number|default_if_none:"" }} {{ voter.street_name }}
+        {% if voter.apartment_number %}, Apartment {{ voter.apartment_number }}{% endif %},
+        Newton, MA
+      </a>
+      {% endwith %}
+    </td>
+  </tr>
+  <tr>
+    <th>Date of Birth</th>
+    <td>{{ voter.date_of_birth|date:"N j, Y" }}</td>
+  </tr>
+  <tr>
+    <th>Date of Registration</th>
+    <td>{{ voter.date_of_registration|date:"N j, Y" }}</td>
+  </tr>
+  <tr>
+    <th>Party Affiliation</th>
+    <td>{{ voter.party_affiliation|default:"N/A" }}</td>
+  </tr>
+  <tr>
+    <th>Voter Score</th>
+    <td>{{ voter.voter_score }}</td>
+  </tr>
+</table>
+
+<h3>Election Participation:</h3>
+<ul class="no-bullets">
+  <li>2020 State: {{ voter.v20state|yesno:"True,False" }}</li>
+  <li>2021 Town: {{ voter.v21town|yesno:"True,False" }}</li>
+  <li>2021 Primary: {{ voter.v21primary|yesno:"True,False" }}</li>
+  <li>2022 General: {{ voter.v22general|yesno:"True,False" }}</li>
+  <li>2023 Town: {{ voter.v23town|yesno:"True,False" }}</li>
+</ul>
+
+
+<br><br>
+<a href="{% url 'voters' %}">← Back to list</a>
+
+</div>
+
+
+{% endblock %}

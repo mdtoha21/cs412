@@ -1,0 +1,92 @@
+{% extends "voter_analytics/base.html" %}
+
+{% block content %}
+
+
+
+<h1>Voter Data Graphs</h1>
+
+<!-- Filter form -->
+<form method="get" action="{% url 'graphs' %}" class="filter-form" style="width: fit-content; margin: 0 auto; text-align: left;">
+        <table>
+            <tr>
+                <th>Select Party Affiliation:</th>
+                <td>
+                    <select name="party_affiliation">
+                        <option value="">-- All --</option>
+                        <option value="D" {% if request.GET.party_affiliation == 'D' %}selected{% endif %}>Democrat (D)</option>
+                        <option value="R" {% if request.GET.party_affiliation == 'R' %}selected{% endif %}>Republican (R)</option>
+                        <option value="U" {% if request.GET.party_affiliation == 'U' %}selected{% endif %}>Unenrolled (U)</option>
+                        <option value="G" {% if request.GET.party_affiliation == 'G' %}selected{% endif %}>Green (G)</option>
+                        <option value="L" {% if request.GET.party_affiliation == 'L' %}selected{% endif %}>Libertarian (L)</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Select Voter Score:</th>
+                <td>
+                    <select name="voter_score">
+                        <option value="">-- Any --</option>
+                        <option value="0" {% if request.GET.voter_score == '0' %}selected{% endif %}>0</option>
+                        <option value="1" {% if request.GET.voter_score == '1' %}selected{% endif %}>1</option>
+                        <option value="2" {% if request.GET.voter_score == '2' %}selected{% endif %}>2</option>
+                        <option value="3" {% if request.GET.voter_score == '3' %}selected{% endif %}>3</option>
+                        <option value="4" {% if request.GET.voter_score == '4' %}selected{% endif %}>4</option>
+                        <option value="5" {% if request.GET.voter_score == '5' %}selected{% endif %}>5</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Min Year of Birth:</th>
+                <td>
+                    <select name="min_year">
+                        <option value="">-- Any --</option>
+                        {% for year in birth_years %}
+                        <option value="{{ year }}" {% if request.GET.min_year == year|stringformat:'s' %}selected{% endif %}>{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Max Year of Birth:</th>
+                <td>
+                    <select name="max_year">
+                        <option value="">-- Any --</option>
+                        {% for year in birth_years %}
+                        <option value="{{ year }}" {% if request.GET.max_year == year|stringformat:'s' %}selected{% endif %}>{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Previous Election Participation</th>
+                <td>
+                    <label><input type="checkbox" name="v20state" {% if request.GET.v20state %}checked{% endif %}> v20state</label><br>
+                    <label><input type="checkbox" name="v21town" {% if request.GET.v21town %}checked{% endif %}> v21town</label><br>
+                    <label><input type="checkbox" name="v21primary" {% if request.GET.v21primary %}checked{% endif %}> v21primary</label><br>
+                    <label><input type="checkbox" name="v22general" {% if request.GET.v22general %}checked{% endif %}> v22general</label><br>
+                    <label><input type="checkbox" name="v23town" {% if request.GET.v23town %}checked{% endif %}> v23town</label>
+                </td>
+            </tr>
+
+            <tr>
+                <td><button type="submit">Filter</button></td>
+            </tr>
+        </table>
+</form>
+
+<!-- Charts -->
+<h2>Distribution of Voters by Year of Birth</h2>
+{{ birth_chart|safe }}
+
+<h2>Voters by Party Affiliation</h2>
+{{ party_chart|safe }}
+
+<h2>Voter Participation per Election</h2>
+{{ participation_chart|safe }}
+
+{% endblock %}
