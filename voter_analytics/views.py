@@ -16,11 +16,7 @@ class VotersListView(ListView):
     context_object_name = 'voters'
     paginate_by = 25
  
-    #def get_queryset(self):
-        
-        # limit results to first 25 records (for now)
-      #  qs = super().get_queryset()
-      #  return qs[:25]
+    
     
     def get_queryset(self):
         
