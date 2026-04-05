@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dad Jokes - Picture Detail</title>
+  <style>
+    body { font-family: sans-serif; max-width: 760px; margin: 2rem auto; line-height: 1.5; }
+    nav a { margin-right: 12px; }
+    img { max-width: 100%; height: auto; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Picture #{{ picture.pk }}</h1>
+  <nav>
+    <a href="{% url 'dadjokes_index' %}">Home</a>
+    <a href="{% url 'dadjokes_pictures' %}">All Pictures</a>
+  </nav>
+
+  <img src="{{ picture.image_url }}" alt="Picture #{{ picture.pk }}" />
+  <p><strong>Contributor:</strong> {{ picture.contributor }}</p>
+  <p><small>{{ picture.created_at }}</small></p>
+</body>
+</html>

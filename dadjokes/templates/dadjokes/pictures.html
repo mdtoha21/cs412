@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dad Jokes - All Pictures</title>
+  <style>
+    body { font-family: sans-serif; max-width: 760px; margin: 2rem auto; line-height: 1.5; }
+    nav a { margin-right: 12px; }
+    img { max-width: 380px; height: auto; border-radius: 8px; display: block; margin: 0.5rem 0; }
+    li { margin-bottom: 1.2rem; }
+  </style>
+</head>
+<body>
+  <h1>All Pictures</h1>
+  <nav>
+    <a href="{% url 'dadjokes_index' %}">Home</a>
+    <a href="{% url 'dadjokes_random' %}">Random</a>
+    <a href="{% url 'dadjokes_jokes' %}">All Jokes</a>
+  </nav>
+
+  <ul>
+    {% for picture in pictures %}
+      <li>
+        <img src="{{ picture.image_url }}" alt="Silly picture {{ forloop.counter }}" />
+        <small>by {{ picture.contributor }} | <a href="{% url 'dadjokes_picture_detail' picture.pk %}">detail</a></small>
+      </li>
+    {% empty %}
+      <li>No pictures found.</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

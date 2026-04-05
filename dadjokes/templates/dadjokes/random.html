@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dad Jokes - Random</title>
+  <style>
+    body { font-family: sans-serif; max-width: 760px; margin: 2rem auto; line-height: 1.5; }
+    img { max-width: 100%; height: auto; border-radius: 8px; }
+    nav a { margin-right: 12px; }
+    .card { padding: 1rem; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Dad Jokes</h1>
+  <nav>
+    <a href="{% url 'dadjokes_index' %}">Home</a>
+    <a href="{% url 'dadjokes_random' %}">Random</a>
+    <a href="{% url 'dadjokes_jokes' %}">All Jokes</a>
+    <a href="{% url 'dadjokes_pictures' %}">All Pictures</a>
+  </nav>
+
+  <div class="card">
+    <h2>Random Joke</h2>
+    {% if joke %}
+      <p>{{ joke.text }}</p>
+      <p><strong>Contributor:</strong> {{ joke.contributor }}</p>
+      <p><small>{{ joke.created_at }}</small></p>
+      <p><a href="{% url 'dadjokes_joke_detail' joke.pk %}">View Joke Detail</a></p>
+    {% else %}
+      <p>No jokes available yet.</p>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h2>Random Picture</h2>
+    {% if picture %}
+      <img src="{{ picture.image_url }}" alt="Random silly image" />
+      <p><strong>Contributor:</strong> {{ picture.contributor }}</p>
+      <p><small>{{ picture.created_at }}</small></p>
+      <p><a href="{% url 'dadjokes_picture_detail' picture.pk %}">View Picture Detail</a></p>
+    {% else %}
+      <p>No pictures available yet.</p>
+    {% endif %}
+  </div>
+</body>
+</html>
