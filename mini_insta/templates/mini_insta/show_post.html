@@ -22,9 +22,25 @@
         
         
         <p><small>Posted at: {{ post.timestamp }}</small></p>
+        {% if user.is_authenticated and can_edit_post %}
         <a href="{% url 'update_post' post.pk %}"> Update </a>
         <br>
         <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger">Delete</a>
+        {% endif %}
+
+        {% if user.is_authenticated and can_like %}
+            {% if has_liked %}
+            <form method="post" action="{% url 'delete_like_post' post.pk %}">
+                {% csrf_token %}
+                <button type="submit">Unlike</button>
+            </form>
+            {% else %}
+            <form method="post" action="{% url 'like_post' post.pk %}">
+                {% csrf_token %}
+                <button type="submit">Like</button>
+            </form>
+            {% endif %}
+        {% endif %}
 
         <div class="likes-section">
             <h4>Liked by:</h4>

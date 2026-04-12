@@ -9,7 +9,7 @@ Description: Form for creating a new post associated with a specific profile.
 
 
 
-<form method="POST" enctype="multipart/form-data" action="{% url 'create_post' profile.pk %}">
+<form method="POST" enctype="multipart/form-data" action="{% url 'create_post' %}">
     {% csrf_token %}
     
     {{ form.as_p }}
@@ -18,7 +18,7 @@ Description: Form for creating a new post associated with a specific profile.
     <input type="file" name="files" multiple>
 
     <button type="submit">Submit</button>
-    <a href="{% url 'show_profile' profile.pk %}">Cancel</a>
+    <a href="{% url 'show_my_profile' %}">Cancel</a>
 </form>
 
 

@@ -1,4 +1,4 @@
 
-https://cs-webapps.bu.edu/mdtoha/dadjokes/api/
+https://cs-webapps.bu.edu/mdtoha/mini_insta/api
 
 

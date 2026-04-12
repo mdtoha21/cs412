@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'mini_insta',
     'voter_analytics',
     'rest_framework',
+    'rest_framework.authtoken',
     'dadjokes',
 ]
 

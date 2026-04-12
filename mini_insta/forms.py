@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from django.contrib.auth.forms import UserCreationForm
 
 
 
@@ -27,3 +28,12 @@ class UpdatePostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['caption']
+
+
+class CreateProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['username', 'display_name', 'bio_text', 'profile_image_url']
+        labels = {
+            'profile_image_url': 'Image URL',
+        }

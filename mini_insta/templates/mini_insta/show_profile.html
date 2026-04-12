@@ -24,10 +24,25 @@ joined on {{profile.join_date}} <br>
 
 {{profile.bio_text}} <br>
 
-<a href="{% url 'show_feed' profile.pk %}">View Feed</a> <br>
+{% if user.is_authenticated and can_edit %}
+    <a href="{% url 'show_feed' %}">View Feed</a> <br>
+    <a href="{% url 'create_post' %}">Create a New Post</a> <br>
+    <a href="{% url 'update_profile' %}">Update Profile</a><br>
+{% endif %}
 
-<a href="{% url 'create_post' profile.pk %}">Create a New Post</a> <br>
-<a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
+{% if user.is_authenticated and can_follow %}
+    {% if is_following %}
+    <form method="post" action="{% url 'delete_follow_profile' profile.pk %}">
+        {% csrf_token %}
+        <button type="submit">Unfollow</button>
+    </form>
+    {% else %}
+    <form method="post" action="{% url 'follow_profile' profile.pk %}">
+        {% csrf_token %}
+        <button type="submit">Follow</button>
+    </form>
+    {% endif %}
+{% endif %}
 
 
 <h1>Posts by {{profile.display_name}}</h1>

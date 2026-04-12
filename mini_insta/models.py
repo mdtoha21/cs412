@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 # Create your models here.
 class Profile(models.Model):
 
@@ -9,6 +10,7 @@ class Profile(models.Model):
     profile_image_url=models.URLField(blank=True)
     bio_text=models.TextField(blank=True)
     join_date=models.DateTimeField(auto_now=True)
+    user=models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
 
     def __str__(self):
@@ -25,6 +27,11 @@ class Profile(models.Model):
     def get_absolute_url(self):
         # redirect back to the profile page after update
         return reverse('show_profile', args=[self.pk])
+
+    def is_owner(self, user):
+        if not user or not user.is_authenticated:
+            return False
+        return self.user_id == user.id
     
     def get_followers(self):
         ''''Retrieve all profiles that are following this profile.'''
@@ -63,6 +70,9 @@ class Profile(models.Model):
         
         return posts
 
+    def is_following(self, other_profile):
+        return Follow.objects.filter(profile=other_profile, follower_profile=self).exists()
+
 
     
     
@@ -92,6 +102,12 @@ class Post(models.Model):
      
      """Return a QuerySet of all likes on this post."""
      return Like.objects.filter(post=self)
+
+    def get_num_likes(self):
+        return Like.objects.filter(post=self).count()
+
+    def is_liked_by(self, profile):
+        return Like.objects.filter(post=self, profile=profile).exists()
     
 
     
