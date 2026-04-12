@@ -25,6 +25,22 @@ def _profile_for_user(user):
     return Profile.objects.create(username=user.username, display_name=user.username, user=user)
 
 
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def api_root(request):
+    base = request.build_absolute_uri("/mini_insta/api/")
+    return Response(
+        {
+            "login": f"{base}login/",
+            "profiles": f"{base}profiles/",
+            "my_profile": f"{base}me/",
+            "my_posts": f"{base}me/posts/",
+            "my_feed": f"{base}me/feed/",
+            "create_post": f"{base}posts/",
+        }
+    )
+
+
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def api_login(request):

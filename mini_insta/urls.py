@@ -25,6 +25,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='logout_confirmation'), name='logout'),
     path('logout_confirmation/', TemplateView.as_view(template_name='mini_insta/logged_out.html'), name='logout_confirmation'),
     path('create_profile', views.CreateProfileView.as_view(), name='create_profile'),
+    path('api/', api_views.api_root, name='api_root'),
     path('api/login/', api_views.api_login, name='api_login'),
     path('api/profiles/', api_views.api_profiles, name='api_profiles'),
     path('api/profiles/<int:pk>/', api_views.api_profile_detail, name='api_profile_detail'),
