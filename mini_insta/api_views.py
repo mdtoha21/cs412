@@ -28,7 +28,9 @@ def _profile_for_user(user):
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def api_root(request):
-    base = request.build_absolute_uri("/mini_insta/api/")
+    base = request.build_absolute_uri(request.path)
+    if not base.endswith("/"):
+        base = f"{base}/"
     return Response(
         {
             "login": f"{base}login/",
