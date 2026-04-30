@@ -1,0 +1,56 @@
+<!--
+File: order_select_restaurant.html
+Author: MD Toha
+Description: Restaurant selection page for new FoodFlow orders.
+-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>Select a Restaurant</h2>
+<p>Choose a restaurant to browse their menu items.</p>
+
+<form method="get" class="search-form">
+    <label for="restaurant-search-order" style="font-weight: 700;">Search by name:</label>
+    <input
+        type="text"
+        id="restaurant-search-order"
+        name="q"
+        value="{{ search_query }}"
+        placeholder="Enter restaurant name"
+    >
+    <button class="button" type="submit">Search</button>
+</form>
+
+{% if search_query %}
+    <p>Showing results for "{{ search_query }}".</p>
+{% endif %}
+
+{% if restaurants %}
+    <div class="card-grid">
+        {% for restaurant in restaurants %}
+            <div class="card">
+                {% if restaurant.image %}
+                    <a href="{% url 'project:order_restaurant_menu' order.pk restaurant.pk %}">
+                        <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}">
+                    </a>
+                {% else %}
+                    <div style="width: 100%; height: 250px; background: #e5e7eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <span style="color: #9ca3af;">No image</span>
+                    </div>
+                {% endif %}
+                <h3 style="margin-top: 0.5rem; margin-bottom: 0.75rem;">{{ restaurant.name }}</h3>
+                <p style="margin: 0.5rem 0;"><strong>Cuisine:</strong> {{ restaurant.cuisine_type }}</p>
+                <p style="margin: 0.5rem 0;"><strong>Phone:</strong> {{ restaurant.phone_number }}</p>
+                <p style="margin: 0.5rem 0; font-size: 0.9rem;"><strong>Address:</strong> {{ restaurant.address }}</p>
+                <a href="{% url 'project:order_restaurant_menu' order.pk restaurant.pk %}" class="button">Browse Menu</a>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No restaurants available.</p>
+{% endif %}
+
+<p style="margin-top: 2rem;">
+    <a href="{% url 'project:order_list' %}">Back to Orders</a>
+</p>
+{% endblock %}

@@ -1,0 +1,21 @@
+<!--
+File: order_confirm_delete.html
+Author: MD Toha
+Description: Order delete confirmation page for FoodFlow.
+-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>Delete Order #{{ order.pk }}</h2>
+<p>Are you sure you want to delete this order? This cannot be undone.</p>
+
+<p><strong>Restaurant:</strong> {{ order.restaurant|default:'Not selected yet' }}</p>
+<p><strong>Delivery Address:</strong> {{ order.delivery_address|default:'Not set yet' }}</p>
+<p><strong>Total:</strong> ${{ order.total_price }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button class="button" type="submit">Yes, Delete Order</button>
+    <a href="{% url 'project:order_detail' order.pk %}" class="button secondary">Cancel</a>
+</form>
+{% endblock %}

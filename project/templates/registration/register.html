@@ -1,0 +1,125 @@
+<!--
+File: register.html
+Author: MD Toha
+Description: Registration page for FoodFlow users.
+-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>Create Your Account</h2>
+<p>Register to start placing food orders.</p>
+
+<form method="post">
+    {% csrf_token %}
+    
+    {% if form.non_field_errors %}
+        <div style="color: #dc2626; margin-bottom: 1rem;">
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <div style="margin-bottom: 1rem;">
+        <label for="{{ form.username.id_for_label }}">Username:</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+            <div style="color: #dc2626; font-size: 0.875rem;">
+                {% for error in form.username.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <label for="{{ form.first_name.id_for_label }}">First Name:</label>
+        {{ form.first_name }}
+        {% if form.first_name.errors %}
+            <div style="color: #dc2626; font-size: 0.875rem;">
+                {% for error in form.first_name.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <label for="{{ form.last_name.id_for_label }}">Last Name:</label>
+        {{ form.last_name }}
+        {% if form.last_name.errors %}
+            <div style="color: #dc2626; font-size: 0.875rem;">
+                {% for error in form.last_name.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <label for="{{ form.email.id_for_label }}">Email:</label>
+        {{ form.email }}
+        {% if form.email.errors %}
+            <div style="color: #dc2626; font-size: 0.875rem;">
+                {% for error in form.email.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <label for="{{ form.phone.id_for_label }}">Phone Number:</label>
+        {{ form.phone }}
+        {% if form.phone.errors %}
+            <div style="color: #dc2626; font-size: 0.875rem;">
+                {% for error in form.phone.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <label for="{{ form.address.id_for_label }}">Delivery Address:</label>
+        {{ form.address }}
+        {% if form.address.errors %}
+            <div style="color: #dc2626; font-size: 0.875rem;">
+                {% for error in form.address.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <label for="{{ form.password1.id_for_label }}">Password:</label>
+        {{ form.password1 }}
+        {% if form.password1.errors %}
+            <div style="color: #dc2626; font-size: 0.875rem;">
+                {% for error in form.password1.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div style="margin-bottom: 1rem;">
+        <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
+        {{ form.password2 }}
+        {% if form.password2.errors %}
+            <div style="color: #dc2626; font-size: 0.875rem;">
+                {% for error in form.password2.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <button class="button" type="submit">Register</button>
+</form>
+
+<p style="margin-top: 1.5rem;">
+    Already have an account? <a href="{% url 'project:home' %}">Go back to login</a>
+</p>
+{% endblock %}

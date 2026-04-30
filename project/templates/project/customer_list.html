@@ -1,0 +1,32 @@
+<!--
+File: customer_list.html
+Author: MD Toha
+Description: Customer listing page for FoodFlow.
+-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>Customers</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for customer in customers %}
+            <tr>
+                <td>{{ customer.first_name }} {{ customer.last_name }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.phone }}</td>
+                <td><a href="{% url 'project:customer_detail' customer.pk %}">View</a></td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="4">No customers yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

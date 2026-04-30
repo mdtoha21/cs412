@@ -1,0 +1,17 @@
+<!--
+File: order_form.html
+Author: MD Toha
+Description: Order creation form for FoodFlow.
+-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>Create Order</h2>
+<p>Select a restaurant and enter your delivery address, then add menu items on the order details page.</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="button" type="submit">Create Order</button>
+</form>
+{% endblock %}

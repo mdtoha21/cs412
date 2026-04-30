@@ -31,7 +31,7 @@ const TOKEN_KEY = "mini_insta_token";
 const PROFILE_ID_KEY = "mini_insta_profile_id";
 
 export default function App(): React.JSX.Element {
-  const [username, setUsername] = useState<string>("");
+1  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [token, setToken] = useState<string | null>(null);
   const [profileId, setProfileId] = useState<number | null>(null);

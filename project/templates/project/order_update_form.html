@@ -1,0 +1,21 @@
+<!--
+File: order_update_form.html
+Author: MD Toha
+Description: Order update form for FoodFlow.
+-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>Edit Order #{{ order.pk }}</h2>
+<p>Update the delivery address for this order.</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="button" type="submit">Save Changes</button>
+</form>
+
+<p style="margin-top: 1.5rem;">
+    <a href="{% url 'project:order_detail' order.pk %}">Back to Order</a>
+</p>
+{% endblock %}

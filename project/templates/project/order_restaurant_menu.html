@@ -1,0 +1,45 @@
+<!--
+File: order_restaurant_menu.html
+Author: MD Toha
+Description: Menu browsing page for a selected FoodFlow restaurant.
+-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>{{ restaurant.name }} - Menu</h2>
+<p><strong>Cuisine:</strong> {{ restaurant.cuisine_type }}</p>
+
+{% if menu_items %}
+    <div style="display: grid; gap: 1rem; margin-top: 1rem;">
+        {% for item in menu_items %}
+            <div class="item-card" style="display: flex; gap: 1rem; align-items: center; text-align: left;">
+                <div style="flex: 0 0 90px;">
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.name }}" style="width: 90px; height: 90px; object-fit: cover; border-radius: 8px; margin: 0;">
+                    {% else %}
+                        <div style="width: 90px; height: 90px; background: #e5e7eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 0.75rem;">No image</div>
+                    {% endif %}
+                </div>
+                <div style="flex: 1; min-width: 0;">
+                    <h3 style="margin: 0 0 0.35rem 0; font-size: 1.05rem; text-align: left;">{{ item.name }}</h3>
+                    <p style="margin: 0 0 0.45rem 0; font-size: 0.9rem; color: #6b7280; text-align: left;">{{ item.description }}</p>
+                    <p style="margin: 0 0 0.6rem 0; font-size: 1rem; font-weight: bold; color: #111827; text-align: left;">${{ item.price }}</p>
+                    <form method="post" action="{% url 'project:add_order_item' order.pk %}" style="display: flex; gap: 0.5rem; justify-content: flex-start;">
+                        {% csrf_token %}
+                        <input type="hidden" name="menu_item_id" value="{{ item.pk }}">
+                        <input type="number" name="quantity" value="1" min="1" style="width: 60px; padding: 0.45rem; border: 1px solid #d1d5db; border-radius: 4px;">
+                        <button type="submit" class="button">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No menu items available for this restaurant.</p>
+{% endif %}
+
+<p style="margin-top: 1.5rem;">
+    <a href="{% url 'project:order_select_restaurant' order.pk %}">Back to Restaurants</a> | 
+    <a href="{% url 'project:order_detail' order.pk %}">View Order</a>
+</p>
+{% endblock %}

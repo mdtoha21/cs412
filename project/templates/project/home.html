@@ -1,0 +1,55 @@
+<!--
+File: home.html
+Author: MD Toha
+Description: Landing page for the FoodFlow app.
+-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>Welcome</h2>
+<p>This app models customers, restaurants, menu items, orders, and order items.</p>
+<div class="actions">
+    {% if user.is_authenticated %}
+        <a class="button" href="{% url 'project:order_create' %}">Start New Order</a>
+    {% else %}
+        <a class="button" href="/accounts/login/">Login to Order</a>
+        <p style="margin-top: 0.75rem;">You need to log in before creating or completing an order.</p>
+    {% endif %}
+</div>
+
+{% if user.is_authenticated and recent_orders %}
+<div style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #e5e7eb;">
+    <h3 style="text-align: center; margin-bottom: 1.5rem;">📋 Your Recent Orders</h3>
+    <div class="card-grid">
+        {% for order in recent_orders %}
+        <div class="card" style="position: relative;">
+            {% if order.restaurant.image %}
+                <img src="{{ order.restaurant.image.url }}" alt="{{ order.restaurant.name }}" style="height: 200px;">
+            {% else %}
+                <div style="height: 200px; background: #f3f4f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">No image</div>
+            {% endif %}
+            <h4 style="margin: 0.5rem 0;">{{ order.restaurant.name }}</h4>
+            <p style="margin: 0.25rem 0; font-size: 0.9rem; color: #6b7280;">
+                {% if order.is_completed %}
+                    <span style="color: #10b981;">● Completed</span>
+                {% else %}
+                    <span style="color: #f59e0b;">● Open</span>
+                {% endif %}
+            </p>
+            <p style="margin: 0.5rem 0; font-size: 0.85rem; color: #9ca3af;">
+                {% if order.order_date %}{{ order.order_date|date:"M d, Y" }}{% else %}N/A{% endif %}
+            </p>
+            <p style="margin: 0.5rem 0; font-weight: 600; font-size: 1.1rem; color: #111827;">
+                ${{ order.total_price|default:"0.00" }}
+            </p>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem; justify-content: center;">
+                <a href="{% url 'project:order_detail' order.pk %}" class="button" style="font-size: 0.9rem; padding: 0.5rem 0.75rem;">View</a>
+                <a href="{% url 'project:reorder_order' order.pk %}" class="button" style="font-size: 0.9rem; padding: 0.5rem 0.75rem; background: #059669;">Reorder</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

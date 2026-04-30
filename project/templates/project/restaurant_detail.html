@@ -1,0 +1,18 @@
+<!--
+File: restaurant_detail.html
+Author: MD Toha
+Description: Restaurant detail page for FoodFlow.
+-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>{{ restaurant.name }}</h2>
+<p><strong>Cuisine:</strong> {{ restaurant.cuisine_type }}</p>
+<p><strong>Phone:</strong> {{ restaurant.phone_number }}</p>
+<p><strong>Address:</strong> {{ restaurant.address }}</p>
+
+{% if restaurant.image %}
+    <p><img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}" style="max-width: 360px;"></p>
+{% endif %}
+<!-- Menu removed from restaurant detail per request: page now shows only restaurant info -->
+{% endblock %}

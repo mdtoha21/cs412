@@ -1,0 +1,21 @@
+<!--
+File: login.html
+Author: MD Toha
+Description: Login page for FoodFlow users.
+-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>Login</h2>
+<p>You must log in before creating or completing an order.</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="button" type="submit">Log in</button>
+</form>
+
+<p style="margin-top: 1.5rem;">
+    Don't have an account? <a href="{% url 'project:register' %}"><strong>Register here</strong></a>
+</p>
+{% endblock %}
