@@ -152,5 +152,9 @@ import socket
 CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
+    # The BU cs-webapps deployment serves apps under a per-user URL prefix
+    # (e.g. https://cs-webapps.bu.edu/mdtoha/...). FORCE_SCRIPT_NAME ensures
+    # reverse() and auth redirects (login/logout) keep that prefix.
+    FORCE_SCRIPT_NAME = '/mdtoha'
     STATIC_URL = '/mdtoha/static/'
     MEDIA_URL = '/mdtoha/media/'

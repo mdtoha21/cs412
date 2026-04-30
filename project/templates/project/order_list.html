@@ -10,30 +10,37 @@ Description: Order history page for FoodFlow.
 <div class="actions">
     <a class="button" href="{% url 'project:order_create' %}">Create Order</a>
 </div>
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Customer</th>
-            <th>Restaurant</th>
-            <th>Total</th>
-            <th>Status</th>
-            <th>Details</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for order in orders %}
-            <tr>
-                <td>{{ order.pk }}</td>
-                <td>{{ order.customer }}</td>
-                <td>{{ order.restaurant }}</td>
-                <td>${{ order.total_price }}</td>
-                <td>{% if order.is_completed %}Completed{% else %}Open{% endif %}</td>
-                <td><a href="{% url 'project:order_detail' order.pk %}">View</a></td>
-            </tr>
-        {% empty %}
-            <tr><td colspan="6">No orders yet.</td></tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.25rem;">
+    {% for order in orders %}
+        <div class="card" style="text-align: left;">
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: space-between;">
+                <div>
+                    <div style="font-weight: 800; font-size: 1.05rem;">
+                        Order #{{ order.pk }}
+                        {% if order.is_completed %}
+                            <span style="margin-left: 0.5rem; color: #10b981; font-weight: 800;">● Completed</span>
+                        {% else %}
+                            <span style="margin-left: 0.5rem; color: #f59e0b; font-weight: 800;">● Open</span>
+                        {% endif %}
+                    </div>
+                    <div style="margin-top: 0.35rem; color: #6b7280;">
+                        <strong>Customer:</strong> {{ order.customer }}<br>
+                        <strong>Restaurant:</strong> {{ order.restaurant }}
+                    </div>
+                </div>
+                <div style="text-align: right; min-width: 160px;">
+                    <div style="font-size: 0.9rem; color: #6b7280;">Total</div>
+                    <div style="font-size: 1.25rem; font-weight: 900; color: #111827;">
+                        ${{ order.total_price }}
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem; justify-content: flex-end; flex-wrap: wrap;">
+                <a class="button secondary" style="padding: 0.45rem 0.75rem; font-size: 0.9rem;" href="{% url 'project:order_detail' order.pk %}">View</a>
+            </div>
+        </div>
+    {% empty %}
+        <div class="card" style="text-align: center;">No orders yet.</div>
+    {% endfor %}
+</div>
 {% endblock %}
