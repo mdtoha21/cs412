@@ -144,9 +144,9 @@ MEDIA_URL = '/media/'
 
 # Redirect URLs for authentication
 LOGIN_URL = 'auth:login'
-# Use a dynamic redirect that works on both dev and production
+# Use Django URL names for dynamic redirects that work on both dev and production
 LOGIN_REDIRECT_URL = 'project:order_list'
-LOGOUT_REDIRECT_URL = 'auth:login'
+LOGOUT_REDIRECT_URL = 'project:home'
 
 import socket
 CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
