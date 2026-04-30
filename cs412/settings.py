@@ -144,7 +144,8 @@ MEDIA_URL = '/media/'
 
 # Redirect URLs for authentication
 LOGIN_URL = 'auth:login'
-LOGIN_REDIRECT_URL = '/project/orders/'
+# Use a dynamic redirect that works on both dev and production
+LOGIN_REDIRECT_URL = 'project:order_list'
 LOGOUT_REDIRECT_URL = 'auth:login'
 
 import socket
@@ -153,4 +154,3 @@ CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/mdtoha/static/'
     MEDIA_URL = '/mdtoha/media/'
-    LOGIN_REDIRECT_URL = '/mdtoha/project/orders/'
