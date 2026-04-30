@@ -12,7 +12,7 @@ Description: Landing page for the FoodFlow app.
     {% if user.is_authenticated %}
         <a class="button" href="{% url 'project:order_create' %}">Start New Order</a>
     {% else %}
-        <a class="button" href="{% url 'login' %}">Login to Order</a>
+        <a class="button" href="{% url 'auth:login' %}">Login to Order</a>
         <p style="margin-top: 0.75rem;">You need to log in before creating or completing an order.</p>
     {% endif %}
 </div>

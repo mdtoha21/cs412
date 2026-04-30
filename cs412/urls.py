@@ -21,7 +21,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include(('django.contrib.auth.urls', 'auth'))),
     path('dadjokes/', include('dadjokes.urls')),
     path('mini_insta/', include('mini_insta.urls')),
     path('quotes/', include("quotes.urls")),
