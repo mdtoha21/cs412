@@ -142,12 +142,17 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
 
+# Redirect to login when authentication is required
+LOGIN_URL = '/accounts/login/'
+
 import socket
 CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/mdtoha/static/'
     MEDIA_URL = '/mdtoha/media/'
+    # On deployed server, update LOGIN_URL to include the path prefix
+    LOGIN_URL = '/mdtoha/accounts/login/'
 
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/project/orders/'
