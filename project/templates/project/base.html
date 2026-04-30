@@ -47,12 +47,12 @@ Description: Base layout for the FoodFlow app.
         <a href="{% url 'project:restaurant_list' %}">Restaurants</a>
         <a href="{% url 'project:order_list' %}">Orders</a>
         {% if user.is_authenticated %}
-            <form class="auth-form" method="post" action="/accounts/logout/">
+            <form class="auth-form" method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
                 <button type="submit">Logout</button>
             </form>
         {% else %}
-            <a class="auth-link" href="/accounts/login/">Login</a>
+            <a class="auth-link" href="{% url 'login' %}">Login</a>
         {% endif %}
     </nav>
 </header>
