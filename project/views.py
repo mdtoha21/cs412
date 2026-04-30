@@ -24,7 +24,13 @@ class HomeView(TemplateView):
         if self.request.user.is_authenticated:
             try:
                 customer = self.request.user.customer
-                recent_orders = Order.objects.filter(customer=customer).select_related('restaurant').order_by('-order_date')[:5]
+                # Use select_related to avoid one-query-per-order when rendering
+                # restaurant names/images in the template.
+                recent_orders = (
+                    Order.objects.filter(customer=customer)
+                    .select_related('restaurant')
+                    .order_by('-order_date')[:5]
+                )
                 context['recent_orders'] = recent_orders
             except Customer.DoesNotExist:
                 context['recent_orders'] = []
@@ -214,7 +220,8 @@ class OrderCreateView(View):
     
     def get(self, request):
         """Create an empty order and send the user to restaurant selection."""
-        # Create empty order for this customer
+        # Orders are created immediately so we can route the user through a
+        # multi-step "wizard": select restaurant → add items → complete purchase.
         try:
             customer = request.user.customer
         except Customer.DoesNotExist:
@@ -360,6 +367,8 @@ def reorder_order(request, pk):
         messages.error(request, 'This order has no items to reorder.')
         return redirect('project:order_detail', pk=source_order.pk)
 
+    # Copying an order is a multi-row operation; wrap it so we never create a
+    # partially-copied order if something fails mid-way.
     with transaction.atomic():
         new_order = Order.objects.create(
             customer=source_order.customer,

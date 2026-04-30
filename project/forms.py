@@ -7,6 +7,8 @@ from .models import Customer, MenuItem, Order, OrderItem
 
 
 class RegisterForm(UserCreationForm):
+    """Registration form that also creates a linked `Customer` profile."""
+
     first_name = forms.CharField(max_length=30, required=True, help_text='Required.')
     last_name = forms.CharField(max_length=150, required=True, help_text='Required.')
     email = forms.EmailField(required=True, help_text='Required.')
@@ -14,10 +16,13 @@ class RegisterForm(UserCreationForm):
     address = forms.CharField(widget=forms.Textarea, required=True, help_text='Delivery address.')
 
     class Meta:
+        """Configure which `User` fields are created from the form."""
+
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
     def clean_email(self):
+        """Enforce email uniqueness across both `User` and `Customer` records."""
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('This email is already registered as a user.')
@@ -26,12 +31,19 @@ class RegisterForm(UserCreationForm):
         return email
 
     def save(self, commit=True):
+        """
+        Create a new `User` and (optionally) a linked `Customer` profile.
+
+        The `Customer` stores delivery-specific fields that don't belong on the
+        auth user model.
+        """
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
         
         if commit:
             user.save()
-            # Create linked Customer profile
+            # Customer creation can fail independently (e.g. uniqueness); keep the
+            # user account valid and surface the issue via logs for debugging.
             try:
                 Customer.objects.create(
                     user=user,
@@ -42,30 +54,44 @@ class RegisterForm(UserCreationForm):
                     address=self.cleaned_data['address']
                 )
             except Exception as e:
-                # Log error but ensure user is created
+                # Avoid raising here: the user account was created successfully.
                 print(f"Warning: Failed to create Customer profile for {user.username}: {e}")
         
         return user
 
 
 class OrderCreateForm(forms.ModelForm):
+    """Form for collecting delivery details when creating an order."""
+
     class Meta:
+        """Limit editable fields to delivery address."""
         model = Order
         fields = ['delivery_address']
 
 
 class OrderUpdateForm(forms.ModelForm):
+    """Form for editing an order's delivery details."""
+
     class Meta:
+        """Limit editable fields to delivery address."""
         model = Order
         fields = ['delivery_address']
 
 
 class OrderItemForm(forms.ModelForm):
+    """Form for adding an item + quantity to an existing order."""
+
     class Meta:
+        """Expose only the menu item selection and quantity."""
         model = OrderItem
         fields = ['menu_item', 'quantity']
 
     def __init__(self, *args, restaurant=None, **kwargs):
+        """
+        Initialize the form and scope menu-item choices to one restaurant.
+
+        This prevents cross-restaurant ordering in a single cart.
+        """
         super().__init__(*args, **kwargs)
         if restaurant is None:
             self.fields['menu_item'].queryset = MenuItem.objects.none()
